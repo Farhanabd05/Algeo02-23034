@@ -1,0 +1,18 @@
+[
+    {
+        "audio": "audio_1.mid",
+        "image": "pic_1.png"
+    },
+    {
+        "audio": "audio_2.mid",
+        "image": "pic_2.png"
+    },
+    {
+        "audio": "audio_3.mid",
+        "image": "pic_3.png"
+    },
+    {
+        "audio": "audio_4.mid",
+        "image": "pic_4.png"
+    }
+]
