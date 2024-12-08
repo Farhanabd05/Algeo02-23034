@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -8,7 +7,9 @@ import { useToast } from '@/hooks/use-toast';
 export default function ZipUploadPage() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [fileSize, setFileSize] = useState<number | null>(null);
+  const [selectedJsonFile, setSelectedJsonFile] = useState<File | null>(null);
   const { toast } = useToast();
+
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -34,6 +35,23 @@ export default function ZipUploadPage() {
 
       setSelectedFile(file);
       setFileSize(file.size);
+    }
+  };
+
+  const handleJsonFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      // Validasi tipe file (hanya JSON)
+      if (!file.name.toLowerCase().endsWith('.json')) {
+        toast({
+          title: "Error",
+          description: "Silakan pilih file JSON",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      setSelectedJsonFile(file);
     }
   };
 
@@ -87,6 +105,55 @@ export default function ZipUploadPage() {
     }
   };
 
+  const handleJsonUpload = async () => {
+    if (!selectedJsonFile) {
+      toast({
+        title: "Error",
+        description: "Silakan pilih file JSON terlebih dahulu",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    try {
+      // Membuat FormData
+      const formData = new FormData();
+      formData.append('file', selectedJsonFile);
+
+      // Kirim ke API route untuk upload JSON
+      const response = await fetch('/api/upload/json', {
+        method: 'POST',
+        body: formData
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        toast({
+          title: "Berhasil",
+          description: "File JSON berhasil diupload",
+          variant: "default"
+        });
+
+        // Reset state setelah upload
+        setSelectedJsonFile(null);
+      } else {
+        toast({
+          title: "Error",
+          description: result.error || "Gagal mengupload file JSON",
+          variant: "destructive"
+        });
+      }
+    } catch (error) {
+      console.error('Upload error:', error);
+      toast({
+        title: "Error",
+        description: "Gagal mengupload file JSON",
+        variant: "destructive"
+      });
+    }
+  };
+
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl mb-4">Upload File ZIP</h1>
@@ -112,6 +179,27 @@ export default function ZipUploadPage() {
           className="w-full"
         >
           Upload dan Ekstrak ZIP
+        </Button>
+        <h1 className="text-2xl mb-4">Upload File JSON</h1>
+        <Input 
+          type="file" 
+          accept=".json"
+          onChange={handleJsonFileChange}
+          className="w-full"
+        />
+
+        {selectedJsonFile && (
+          <div className="mt-2">
+            <p>Nama File: {selectedJsonFile.name}</p>
+          </div>
+        )}
+
+        <Button 
+          onClick={handleJsonUpload}
+          disabled={!selectedJsonFile}
+          className="w-full"
+        >
+          Upload JSON
         </Button>
       </div>
     </div>

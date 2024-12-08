@@ -1,3 +1,4 @@
+//src/app/api/upload/zip/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import path from 'path';
 import fs from 'fs';
@@ -14,7 +15,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Validasi ekstensi file
-    if (!file.name.toLowerCase().endsWith('.zip') || !file.name.toLowerCase().includes('.rar')) {
+    if (!file.name.toLowerCase().endsWith('.zip')) {
       return NextResponse.json({ error: 'Hanya file ZIP atau RAR yang diperbolehkan' }, { status: 400 });
     }
 
