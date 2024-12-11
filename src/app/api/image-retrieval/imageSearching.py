@@ -1,7 +1,9 @@
+# src/api/image-retrieval/imageSearching.py
 import numpy as np
 from PIL import Image
 import os
-
+import sys
+import json
 def grayscaleConvert(image):
     imgArray = np.asarray(image, dtype=np.float32)
     redArr = imgArray[:,:,0]
@@ -22,8 +24,8 @@ def standardization(flattenImageSet):
     sigmaPixel = np.sum(flattenImageSet, axis=0)                # array [jumlah pixel ke-j dari tiap image i]
     N = flattenImageSet.shape[0]
     M = flattenImageSet.shape[1]
-    print("N" + str(N))
-    print("M" + str(M))
+    # print("N" + str(N))
+    # print("M" + str(M))
     mean = sigmaPixel/N
     standardized = flattenImageSet - mean
     return standardized, mean
@@ -69,19 +71,36 @@ def searchImage(imagePath: str, folderPath: str, imgSize=(64, 64), k=100, maxRes
     # Proses Dataset
     dataset, imagesNameSet = processImageFolder(folderPath, imgSize)
     standardizedDataset, mean = standardization(dataset)
-    standardizedQ = qFlattened - mean               # (q' - mean)
-    print("proses standar udah")
+    standardizedQ = qFlattened - mean
 
     # PCA untuk proyeksi dataset dan query
     Z, Uk = pcaSVD(standardizedDataset, k)
-    ZqImage = standardizedQ @ Uk                    # ZqImage =  (q' - mean) Uk
+    ZqImage = standardizedQ @ Uk
 
     # Similarity Computation
-    closestImage = similarity(ZqImage, Z, maxResult)
+    closestImageIndices = similarity(ZqImage, Z, maxResult)
 
-    # nama gambar dan jarak kedekatan
-    results = [(imagesNameSet[idx], distance) for idx, distance in closestImage]
-    return results
+    # Buat daftar hasil dengan nama file dan jarak
+    results = [
+        {
+            'filename': imagesNameSet[idx], 
+            'distance': float(dist)  # convert to native float
+        } 
+        for idx, dist in closestImageIndices
+    ]
+    
+    # Cetak sebagai JSON agar mudah dibaca di sisi server
+    print(json.dumps(results))
+
+
+if __name__ == "__main__":
+    if len(sys.argv) < 3:
+        print("Usage: python imageSearching.py <query_image_path> <dataset_dir>")
+        sys.exit(1)
+
+    query_image_path = sys.argv[1]
+    dataset_dir = sys.argv[2]
+    searchImage(query_image_path, dataset_dir)
 
 
 

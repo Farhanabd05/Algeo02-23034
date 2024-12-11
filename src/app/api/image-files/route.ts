@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
 
         const directory = path.join(process.cwd(), 'public', 'uploads', 'image');
 
-        // Baca file dari direktori
+        // Baca file dari direktori2
         const files = await fs.promises.readdir(directory);
 
         // Filter hanya file (bukan direktori)
