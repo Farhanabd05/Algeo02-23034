@@ -1,0 +1,467 @@
+[
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "stringify",
+        "importPath": "flatted",
+        "description": "flatted",
+        "isExtraImport": true,
+        "detail": "flatted",
+        "documentation": {}
+    },
+    {
+        "label": "parse",
+        "importPath": "flatted",
+        "description": "flatted",
+        "isExtraImport": true,
+        "detail": "flatted",
+        "documentation": {}
+    },
+    {
+        "label": "mido",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "mido",
+        "description": "mido",
+        "detail": "mido",
+        "documentation": {}
+    },
+    {
+        "label": "numpy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "numpy",
+        "description": "numpy",
+        "detail": "numpy",
+        "documentation": {}
+    },
+    {
+        "label": "Image",
+        "importPath": "PIL",
+        "description": "PIL",
+        "isExtraImport": true,
+        "detail": "PIL",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "sys",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sys",
+        "description": "sys",
+        "detail": "sys",
+        "documentation": {}
+    },
+    {
+        "label": "_Known",
+        "kind": 6,
+        "importPath": "node_modules.flatted.python.flatted",
+        "description": "node_modules.flatted.python.flatted",
+        "peekOfCode": "class _Known:\n    def __init__(self):\n        self.key = []\n        self.value = []\nclass _String:\n    def __init__(self, value):\n        self.value = value\ndef _array_keys(value):\n    keys = []\n    i = 0",
+        "detail": "node_modules.flatted.python.flatted",
+        "documentation": {}
+    },
+    {
+        "label": "_String",
+        "kind": 6,
+        "importPath": "node_modules.flatted.python.flatted",
+        "description": "node_modules.flatted.python.flatted",
+        "peekOfCode": "class _String:\n    def __init__(self, value):\n        self.value = value\ndef _array_keys(value):\n    keys = []\n    i = 0\n    for _ in value:\n        keys.append(i)\n        i += 1\n    return keys",
+        "detail": "node_modules.flatted.python.flatted",
+        "documentation": {}
+    },
+    {
+        "label": "parse",
+        "kind": 2,
+        "importPath": "node_modules.flatted.python.flatted",
+        "description": "node_modules.flatted.python.flatted",
+        "peekOfCode": "def parse(value, *args, **kwargs):\n    json = _json.loads(value, *args, **kwargs)\n    wrapped = []\n    for value in json:\n        wrapped.append(_wrap(value))\n    input = []\n    for value in wrapped:\n        if isinstance(value, _String):\n            input.append(value.value)\n        else:",
+        "detail": "node_modules.flatted.python.flatted",
+        "documentation": {}
+    },
+    {
+        "label": "stringify",
+        "kind": 2,
+        "importPath": "node_modules.flatted.python.flatted",
+        "description": "node_modules.flatted.python.flatted",
+        "peekOfCode": "def stringify(value, *args, **kwargs):\n    known = _Known()\n    input = []\n    output = []\n    i = int(_index(known, input, value))\n    while i < len(input):\n        output.append(_transform(known, input, input[i]))\n        i += 1\n    return _json.dumps(output, *args, **kwargs)",
+        "detail": "node_modules.flatted.python.flatted",
+        "documentation": {}
+    },
+    {
+        "label": "stringify",
+        "kind": 2,
+        "importPath": "node_modules.flatted.python.test",
+        "description": "node_modules.flatted.python.test",
+        "peekOfCode": "def stringify(value):\n    return _stringify(value, separators=(',', ':'))\nassert stringify([None, None]) == '[[null,null]]'\na = []\no = {}\nassert stringify(a) == '[[]]'\nassert stringify(o) == '[{}]'\na.append(a)\no['o'] = o\nassert stringify(a) == '[[\"0\"]]'",
+        "detail": "node_modules.flatted.python.test",
+        "documentation": {}
+    },
+    {
+        "label": "a",
+        "kind": 5,
+        "importPath": "node_modules.flatted.python.test",
+        "description": "node_modules.flatted.python.test",
+        "peekOfCode": "a = []\no = {}\nassert stringify(a) == '[[]]'\nassert stringify(o) == '[{}]'\na.append(a)\no['o'] = o\nassert stringify(a) == '[[\"0\"]]'\nassert stringify(o) == '[{\"o\":\"0\"}]'\nb = parse(stringify(a))\nassert isinstance(b, list) and b[0] == b",
+        "detail": "node_modules.flatted.python.test",
+        "documentation": {}
+    },
+    {
+        "label": "o",
+        "kind": 5,
+        "importPath": "node_modules.flatted.python.test",
+        "description": "node_modules.flatted.python.test",
+        "peekOfCode": "o = {}\nassert stringify(a) == '[[]]'\nassert stringify(o) == '[{}]'\na.append(a)\no['o'] = o\nassert stringify(a) == '[[\"0\"]]'\nassert stringify(o) == '[{\"o\":\"0\"}]'\nb = parse(stringify(a))\nassert isinstance(b, list) and b[0] == b\na.append(1)",
+        "detail": "node_modules.flatted.python.test",
+        "documentation": {}
+    },
+    {
+        "label": "o['o']",
+        "kind": 5,
+        "importPath": "node_modules.flatted.python.test",
+        "description": "node_modules.flatted.python.test",
+        "peekOfCode": "o['o'] = o\nassert stringify(a) == '[[\"0\"]]'\nassert stringify(o) == '[{\"o\":\"0\"}]'\nb = parse(stringify(a))\nassert isinstance(b, list) and b[0] == b\na.append(1)\na.append('two')\na.append(True)\no['one'] = 1\no['two'] = 'two'",
+        "detail": "node_modules.flatted.python.test",
+        "documentation": {}
+    },
+    {
+        "label": "b",
+        "kind": 5,
+        "importPath": "node_modules.flatted.python.test",
+        "description": "node_modules.flatted.python.test",
+        "peekOfCode": "b = parse(stringify(a))\nassert isinstance(b, list) and b[0] == b\na.append(1)\na.append('two')\na.append(True)\no['one'] = 1\no['two'] = 'two'\no['three'] = True\nassert stringify(a) == '[[\"0\",1,\"1\",true],\"two\"]'\nassert stringify(o) == '[{\"o\":\"0\",\"one\":1,\"two\":\"1\",\"three\":true},\"two\"]'",
+        "detail": "node_modules.flatted.python.test",
+        "documentation": {}
+    },
+    {
+        "label": "o['one']",
+        "kind": 5,
+        "importPath": "node_modules.flatted.python.test",
+        "description": "node_modules.flatted.python.test",
+        "peekOfCode": "o['one'] = 1\no['two'] = 'two'\no['three'] = True\nassert stringify(a) == '[[\"0\",1,\"1\",true],\"two\"]'\nassert stringify(o) == '[{\"o\":\"0\",\"one\":1,\"two\":\"1\",\"three\":true},\"two\"]'\na.append(o)\no['a'] = a\nassert stringify(a) == '[[\"0\",1,\"1\",true,\"2\"],\"two\",{\"o\":\"2\",\"one\":1,\"two\":\"1\",\"three\":true,\"a\":\"0\"}]'\nassert stringify(o) == '[{\"o\":\"0\",\"one\":1,\"two\":\"1\",\"three\":true,\"a\":\"2\"},\"two\",[\"2\",1,\"1\",true,\"0\"]]'\na.append({'test': 'OK'})",
+        "detail": "node_modules.flatted.python.test",
+        "documentation": {}
+    },
+    {
+        "label": "o['two']",
+        "kind": 5,
+        "importPath": "node_modules.flatted.python.test",
+        "description": "node_modules.flatted.python.test",
+        "peekOfCode": "o['two'] = 'two'\no['three'] = True\nassert stringify(a) == '[[\"0\",1,\"1\",true],\"two\"]'\nassert stringify(o) == '[{\"o\":\"0\",\"one\":1,\"two\":\"1\",\"three\":true},\"two\"]'\na.append(o)\no['a'] = a\nassert stringify(a) == '[[\"0\",1,\"1\",true,\"2\"],\"two\",{\"o\":\"2\",\"one\":1,\"two\":\"1\",\"three\":true,\"a\":\"0\"}]'\nassert stringify(o) == '[{\"o\":\"0\",\"one\":1,\"two\":\"1\",\"three\":true,\"a\":\"2\"},\"two\",[\"2\",1,\"1\",true,\"0\"]]'\na.append({'test': 'OK'})\na.append([1, 2, 3])",
+        "detail": "node_modules.flatted.python.test",
+        "documentation": {}
+    },
+    {
+        "label": "o['three']",
+        "kind": 5,
+        "importPath": "node_modules.flatted.python.test",
+        "description": "node_modules.flatted.python.test",
+        "peekOfCode": "o['three'] = True\nassert stringify(a) == '[[\"0\",1,\"1\",true],\"two\"]'\nassert stringify(o) == '[{\"o\":\"0\",\"one\":1,\"two\":\"1\",\"three\":true},\"two\"]'\na.append(o)\no['a'] = a\nassert stringify(a) == '[[\"0\",1,\"1\",true,\"2\"],\"two\",{\"o\":\"2\",\"one\":1,\"two\":\"1\",\"three\":true,\"a\":\"0\"}]'\nassert stringify(o) == '[{\"o\":\"0\",\"one\":1,\"two\":\"1\",\"three\":true,\"a\":\"2\"},\"two\",[\"2\",1,\"1\",true,\"0\"]]'\na.append({'test': 'OK'})\na.append([1, 2, 3])\no['test'] = {'test': 'OK'}",
+        "detail": "node_modules.flatted.python.test",
+        "documentation": {}
+    },
+    {
+        "label": "o['a']",
+        "kind": 5,
+        "importPath": "node_modules.flatted.python.test",
+        "description": "node_modules.flatted.python.test",
+        "peekOfCode": "o['a'] = a\nassert stringify(a) == '[[\"0\",1,\"1\",true,\"2\"],\"two\",{\"o\":\"2\",\"one\":1,\"two\":\"1\",\"three\":true,\"a\":\"0\"}]'\nassert stringify(o) == '[{\"o\":\"0\",\"one\":1,\"two\":\"1\",\"three\":true,\"a\":\"2\"},\"two\",[\"2\",1,\"1\",true,\"0\"]]'\na.append({'test': 'OK'})\na.append([1, 2, 3])\no['test'] = {'test': 'OK'}\no['array'] = [1, 2, 3]\nassert stringify(a) == '[[\"0\",1,\"1\",true,\"2\",\"3\",\"4\"],\"two\",{\"o\":\"2\",\"one\":1,\"two\":\"1\",\"three\":true,\"a\":\"0\",\"test\":\"3\",\"array\":\"4\"},{\"test\":\"5\"},[1,2,3],\"OK\"]'\nassert stringify(o) == '[{\"o\":\"0\",\"one\":1,\"two\":\"1\",\"three\":true,\"a\":\"2\",\"test\":\"3\",\"array\":\"4\"},\"two\",[\"2\",1,\"1\",true,\"0\",\"3\",\"4\"],{\"test\":\"5\"},[1,2,3],\"OK\"]'\na2 = parse(stringify(a));",
+        "detail": "node_modules.flatted.python.test",
+        "documentation": {}
+    },
+    {
+        "label": "o['test']",
+        "kind": 5,
+        "importPath": "node_modules.flatted.python.test",
+        "description": "node_modules.flatted.python.test",
+        "peekOfCode": "o['test'] = {'test': 'OK'}\no['array'] = [1, 2, 3]\nassert stringify(a) == '[[\"0\",1,\"1\",true,\"2\",\"3\",\"4\"],\"two\",{\"o\":\"2\",\"one\":1,\"two\":\"1\",\"three\":true,\"a\":\"0\",\"test\":\"3\",\"array\":\"4\"},{\"test\":\"5\"},[1,2,3],\"OK\"]'\nassert stringify(o) == '[{\"o\":\"0\",\"one\":1,\"two\":\"1\",\"three\":true,\"a\":\"2\",\"test\":\"3\",\"array\":\"4\"},\"two\",[\"2\",1,\"1\",true,\"0\",\"3\",\"4\"],{\"test\":\"5\"},[1,2,3],\"OK\"]'\na2 = parse(stringify(a));\no2 = parse(stringify(o));\nassert a2[0] == a2\nassert o2['o'] == o2\nassert a2[1] == 1 and a2[2] == 'two' and a2[3] == True and isinstance(a2[4], dict)\nassert a2[4] == a2[4]['o'] and a2 == a2[4]['o']['a']",
+        "detail": "node_modules.flatted.python.test",
+        "documentation": {}
+    },
+    {
+        "label": "o['array']",
+        "kind": 5,
+        "importPath": "node_modules.flatted.python.test",
+        "description": "node_modules.flatted.python.test",
+        "peekOfCode": "o['array'] = [1, 2, 3]\nassert stringify(a) == '[[\"0\",1,\"1\",true,\"2\",\"3\",\"4\"],\"two\",{\"o\":\"2\",\"one\":1,\"two\":\"1\",\"three\":true,\"a\":\"0\",\"test\":\"3\",\"array\":\"4\"},{\"test\":\"5\"},[1,2,3],\"OK\"]'\nassert stringify(o) == '[{\"o\":\"0\",\"one\":1,\"two\":\"1\",\"three\":true,\"a\":\"2\",\"test\":\"3\",\"array\":\"4\"},\"two\",[\"2\",1,\"1\",true,\"0\",\"3\",\"4\"],{\"test\":\"5\"},[1,2,3],\"OK\"]'\na2 = parse(stringify(a));\no2 = parse(stringify(o));\nassert a2[0] == a2\nassert o2['o'] == o2\nassert a2[1] == 1 and a2[2] == 'two' and a2[3] == True and isinstance(a2[4], dict)\nassert a2[4] == a2[4]['o'] and a2 == a2[4]['o']['a']\nstr = parse('[{\"prop\":\"1\",\"a\":\"2\",\"b\":\"3\"},{\"value\":123},[\"4\",\"5\"],{\"e\":\"6\",\"t\":\"7\",\"p\":4},{},{\"b\":\"8\"},\"f\",{\"a\":\"9\"},[\"10\"],\"sup\",{\"a\":1,\"d\":2,\"c\":\"7\",\"z\":\"11\",\"h\":1},{\"g\":2,\"a\":\"7\",\"b\":\"12\",\"f\":6},{\"r\":4,\"u\":\"7\",\"c\":5}]')",
+        "detail": "node_modules.flatted.python.test",
+        "documentation": {}
+    },
+    {
+        "label": "a2",
+        "kind": 5,
+        "importPath": "node_modules.flatted.python.test",
+        "description": "node_modules.flatted.python.test",
+        "peekOfCode": "a2 = parse(stringify(a));\no2 = parse(stringify(o));\nassert a2[0] == a2\nassert o2['o'] == o2\nassert a2[1] == 1 and a2[2] == 'two' and a2[3] == True and isinstance(a2[4], dict)\nassert a2[4] == a2[4]['o'] and a2 == a2[4]['o']['a']\nstr = parse('[{\"prop\":\"1\",\"a\":\"2\",\"b\":\"3\"},{\"value\":123},[\"4\",\"5\"],{\"e\":\"6\",\"t\":\"7\",\"p\":4},{},{\"b\":\"8\"},\"f\",{\"a\":\"9\"},[\"10\"],\"sup\",{\"a\":1,\"d\":2,\"c\":\"7\",\"z\":\"11\",\"h\":1},{\"g\":2,\"a\":\"7\",\"b\":\"12\",\"f\":6},{\"r\":4,\"u\":\"7\",\"c\":5}]')\nassert str['b']['t']['a'] == 'sup' and str['a'][1]['b'][0]['c'] == str['b']['t']\noo = parse('[{\"a\":\"1\",\"b\":\"0\",\"c\":\"2\"},{\"aa\":\"3\"},{\"ca\":\"4\",\"cb\":\"5\",\"cc\":\"6\",\"cd\":\"7\",\"ce\":\"8\",\"cf\":\"9\"},{\"aaa\":\"10\"},{\"caa\":\"4\"},{\"cba\":\"5\"},{\"cca\":\"2\"},{\"cda\":\"4\"},\"value2\",\"value3\",\"value1\"]');\nassert oo['a']['aa']['aaa'] == 'value1' and oo == oo['b'] and oo['c']['ca']['caa'] == oo['c']['ca']",
+        "detail": "node_modules.flatted.python.test",
+        "documentation": {}
+    },
+    {
+        "label": "o2",
+        "kind": 5,
+        "importPath": "node_modules.flatted.python.test",
+        "description": "node_modules.flatted.python.test",
+        "peekOfCode": "o2 = parse(stringify(o));\nassert a2[0] == a2\nassert o2['o'] == o2\nassert a2[1] == 1 and a2[2] == 'two' and a2[3] == True and isinstance(a2[4], dict)\nassert a2[4] == a2[4]['o'] and a2 == a2[4]['o']['a']\nstr = parse('[{\"prop\":\"1\",\"a\":\"2\",\"b\":\"3\"},{\"value\":123},[\"4\",\"5\"],{\"e\":\"6\",\"t\":\"7\",\"p\":4},{},{\"b\":\"8\"},\"f\",{\"a\":\"9\"},[\"10\"],\"sup\",{\"a\":1,\"d\":2,\"c\":\"7\",\"z\":\"11\",\"h\":1},{\"g\":2,\"a\":\"7\",\"b\":\"12\",\"f\":6},{\"r\":4,\"u\":\"7\",\"c\":5}]')\nassert str['b']['t']['a'] == 'sup' and str['a'][1]['b'][0]['c'] == str['b']['t']\noo = parse('[{\"a\":\"1\",\"b\":\"0\",\"c\":\"2\"},{\"aa\":\"3\"},{\"ca\":\"4\",\"cb\":\"5\",\"cc\":\"6\",\"cd\":\"7\",\"ce\":\"8\",\"cf\":\"9\"},{\"aaa\":\"10\"},{\"caa\":\"4\"},{\"cba\":\"5\"},{\"cca\":\"2\"},{\"cda\":\"4\"},\"value2\",\"value3\",\"value1\"]');\nassert oo['a']['aa']['aaa'] == 'value1' and oo == oo['b'] and oo['c']['ca']['caa'] == oo['c']['ca']\nprint('OK')",
+        "detail": "node_modules.flatted.python.test",
+        "documentation": {}
+    },
+    {
+        "label": "str",
+        "kind": 5,
+        "importPath": "node_modules.flatted.python.test",
+        "description": "node_modules.flatted.python.test",
+        "peekOfCode": "str = parse('[{\"prop\":\"1\",\"a\":\"2\",\"b\":\"3\"},{\"value\":123},[\"4\",\"5\"],{\"e\":\"6\",\"t\":\"7\",\"p\":4},{},{\"b\":\"8\"},\"f\",{\"a\":\"9\"},[\"10\"],\"sup\",{\"a\":1,\"d\":2,\"c\":\"7\",\"z\":\"11\",\"h\":1},{\"g\":2,\"a\":\"7\",\"b\":\"12\",\"f\":6},{\"r\":4,\"u\":\"7\",\"c\":5}]')\nassert str['b']['t']['a'] == 'sup' and str['a'][1]['b'][0]['c'] == str['b']['t']\noo = parse('[{\"a\":\"1\",\"b\":\"0\",\"c\":\"2\"},{\"aa\":\"3\"},{\"ca\":\"4\",\"cb\":\"5\",\"cc\":\"6\",\"cd\":\"7\",\"ce\":\"8\",\"cf\":\"9\"},{\"aaa\":\"10\"},{\"caa\":\"4\"},{\"cba\":\"5\"},{\"cca\":\"2\"},{\"cda\":\"4\"},\"value2\",\"value3\",\"value1\"]');\nassert oo['a']['aa']['aaa'] == 'value1' and oo == oo['b'] and oo['c']['ca']['caa'] == oo['c']['ca']\nprint('OK')",
+        "detail": "node_modules.flatted.python.test",
+        "documentation": {}
+    },
+    {
+        "label": "oo",
+        "kind": 5,
+        "importPath": "node_modules.flatted.python.test",
+        "description": "node_modules.flatted.python.test",
+        "peekOfCode": "oo = parse('[{\"a\":\"1\",\"b\":\"0\",\"c\":\"2\"},{\"aa\":\"3\"},{\"ca\":\"4\",\"cb\":\"5\",\"cc\":\"6\",\"cd\":\"7\",\"ce\":\"8\",\"cf\":\"9\"},{\"aaa\":\"10\"},{\"caa\":\"4\"},{\"cba\":\"5\"},{\"cca\":\"2\"},{\"cda\":\"4\"},\"value2\",\"value3\",\"value1\"]');\nassert oo['a']['aa']['aaa'] == 'value1' and oo == oo['b'] and oo['c']['ca']['caa'] == oo['c']['ca']\nprint('OK')",
+        "detail": "node_modules.flatted.python.test",
+        "documentation": {}
+    },
+    {
+        "label": "extract_features",
+        "kind": 2,
+        "importPath": "src.app.api.audio-retrieval.audioSearching",
+        "description": "src.app.api.audio-retrieval.audioSearching",
+        "peekOfCode": "def extract_features(current_segment: list) -> list:\n        features = []\n        bins_128 = np.arange(0, 128 + 1)\n        ATB = np.histogram(current_segment, bins=bins_128)[0]\n        ATB = ATB / ATB.sum()\n        features.extend(ATB)\n        bins_255 = np.arange(-127, 128 + 1)\n        RTB_current_segment = []\n        for i in range(len(current_segment) - 1):\n            RTB_current_segment.append(current_segment[i + 1] - current_segment[i])",
+        "detail": "src.app.api.audio-retrieval.audioSearching",
+        "documentation": {}
+    },
+    {
+        "label": "process_audio",
+        "kind": 2,
+        "importPath": "src.app.api.audio-retrieval.audioSearching",
+        "description": "src.app.api.audio-retrieval.audioSearching",
+        "peekOfCode": "def process_audio(path: str):\n    midi_file = mido.MidiFile(path)\n    ticks_per_beat = midi_file.ticks_per_beat\n    current_segment_length = SEGMENT * ticks_per_beat\n    slide_length = SLIDE * ticks_per_beat\n    music_features = []\n    for track_index, track in enumerate(midi_file.tracks):\n        track_ticks = 0\n        cumulative_ticks = []\n        for msg in track:",
+        "detail": "src.app.api.audio-retrieval.audioSearching",
+        "documentation": {}
+    },
+    {
+        "label": "minmax_normalize",
+        "kind": 2,
+        "importPath": "src.app.api.audio-retrieval.audioSearching",
+        "description": "src.app.api.audio-retrieval.audioSearching",
+        "peekOfCode": "def minmax_normalize(array: list) -> list:\n    return (array - np.min(array)) / (np.max(array) - np.min(array))\ndef standard_normalize(array: list) -> list:\n    return (array - np.mean(array)) / np.std(array)\ndef cosine_similarity(v1: np.ndarray, v2: np.ndarray) -> float:\n    return np.dot(v1, v2) / (np.linalg.norm(v1) * np.linalg.norm(v2))\ndef compare_features(features1: list, features2: list, atb_weight: int = ATB_WEIGHT, rtb_weight: int = RTB_WEIGHT, ftb_weight: int = FTB_WEIGHT) -> float:\n    return cosine_similarity(features1[0:128], features2[0:128]) * atb_weight + cosine_similarity(features1[128:383], features2[128:383]) * rtb_weight + cosine_similarity(features1[383:638], features2[383:638]) * ftb_weight\ndef compare_music(music1: list, music2: list) -> float:\n    max = 0",
+        "detail": "src.app.api.audio-retrieval.audioSearching",
+        "documentation": {}
+    },
+    {
+        "label": "standard_normalize",
+        "kind": 2,
+        "importPath": "src.app.api.audio-retrieval.audioSearching",
+        "description": "src.app.api.audio-retrieval.audioSearching",
+        "peekOfCode": "def standard_normalize(array: list) -> list:\n    return (array - np.mean(array)) / np.std(array)\ndef cosine_similarity(v1: np.ndarray, v2: np.ndarray) -> float:\n    return np.dot(v1, v2) / (np.linalg.norm(v1) * np.linalg.norm(v2))\ndef compare_features(features1: list, features2: list, atb_weight: int = ATB_WEIGHT, rtb_weight: int = RTB_WEIGHT, ftb_weight: int = FTB_WEIGHT) -> float:\n    return cosine_similarity(features1[0:128], features2[0:128]) * atb_weight + cosine_similarity(features1[128:383], features2[128:383]) * rtb_weight + cosine_similarity(features1[383:638], features2[383:638]) * ftb_weight\ndef compare_music(music1: list, music2: list) -> float:\n    max = 0\n    for feature1 in music1:\n        for feature2 in music2:",
+        "detail": "src.app.api.audio-retrieval.audioSearching",
+        "documentation": {}
+    },
+    {
+        "label": "cosine_similarity",
+        "kind": 2,
+        "importPath": "src.app.api.audio-retrieval.audioSearching",
+        "description": "src.app.api.audio-retrieval.audioSearching",
+        "peekOfCode": "def cosine_similarity(v1: np.ndarray, v2: np.ndarray) -> float:\n    return np.dot(v1, v2) / (np.linalg.norm(v1) * np.linalg.norm(v2))\ndef compare_features(features1: list, features2: list, atb_weight: int = ATB_WEIGHT, rtb_weight: int = RTB_WEIGHT, ftb_weight: int = FTB_WEIGHT) -> float:\n    return cosine_similarity(features1[0:128], features2[0:128]) * atb_weight + cosine_similarity(features1[128:383], features2[128:383]) * rtb_weight + cosine_similarity(features1[383:638], features2[383:638]) * ftb_weight\ndef compare_music(music1: list, music2: list) -> float:\n    max = 0\n    for feature1 in music1:\n        for feature2 in music2:\n            score = compare_features(feature1, feature2)\n            if score > max:",
+        "detail": "src.app.api.audio-retrieval.audioSearching",
+        "documentation": {}
+    },
+    {
+        "label": "compare_features",
+        "kind": 2,
+        "importPath": "src.app.api.audio-retrieval.audioSearching",
+        "description": "src.app.api.audio-retrieval.audioSearching",
+        "peekOfCode": "def compare_features(features1: list, features2: list, atb_weight: int = ATB_WEIGHT, rtb_weight: int = RTB_WEIGHT, ftb_weight: int = FTB_WEIGHT) -> float:\n    return cosine_similarity(features1[0:128], features2[0:128]) * atb_weight + cosine_similarity(features1[128:383], features2[128:383]) * rtb_weight + cosine_similarity(features1[383:638], features2[383:638]) * ftb_weight\ndef compare_music(music1: list, music2: list) -> float:\n    max = 0\n    for feature1 in music1:\n        for feature2 in music2:\n            score = compare_features(feature1, feature2)\n            if score > max:\n                max = float(score)\n    return max",
+        "detail": "src.app.api.audio-retrieval.audioSearching",
+        "documentation": {}
+    },
+    {
+        "label": "compare_music",
+        "kind": 2,
+        "importPath": "src.app.api.audio-retrieval.audioSearching",
+        "description": "src.app.api.audio-retrieval.audioSearching",
+        "peekOfCode": "def compare_music(music1: list, music2: list) -> float:\n    max = 0\n    for feature1 in music1:\n        for feature2 in music2:\n            score = compare_features(feature1, feature2)\n            if score > max:\n                max = float(score)\n    return max\ndef find_best_match(music: list, database_features: list, database_path: list) -> list[tuple[str, float]]:\n    best_scores = []",
+        "detail": "src.app.api.audio-retrieval.audioSearching",
+        "documentation": {}
+    },
+    {
+        "label": "find_best_match",
+        "kind": 2,
+        "importPath": "src.app.api.audio-retrieval.audioSearching",
+        "description": "src.app.api.audio-retrieval.audioSearching",
+        "peekOfCode": "def find_best_match(music: list, database_features: list, database_path: list) -> list[tuple[str, float]]:\n    best_scores = []\n    length = len(database_features)\n    for i in range(length):\n        score = compare_music(music, database_features[i])\n        best_scores.append((database_path[i], score))\n    best_scores.sort(key=lambda x: x[1], reverse=True)\n    return best_scores\n# Testing\nAUDIO_PATH = \"./public/uploads/audio/\"",
+        "detail": "src.app.api.audio-retrieval.audioSearching",
+        "documentation": {}
+    },
+    {
+        "label": "SEGMENT",
+        "kind": 5,
+        "importPath": "src.app.api.audio-retrieval.audioSearching",
+        "description": "src.app.api.audio-retrieval.audioSearching",
+        "peekOfCode": "SEGMENT = 20\nSLIDE = 4\nATB_WEIGHT = 0.5\nRTB_WEIGHT = 0.3\nFTB_WEIGHT = 0.2\ndef extract_features(current_segment: list) -> list:\n        features = []\n        bins_128 = np.arange(0, 128 + 1)\n        ATB = np.histogram(current_segment, bins=bins_128)[0]\n        ATB = ATB / ATB.sum()",
+        "detail": "src.app.api.audio-retrieval.audioSearching",
+        "documentation": {}
+    },
+    {
+        "label": "SLIDE",
+        "kind": 5,
+        "importPath": "src.app.api.audio-retrieval.audioSearching",
+        "description": "src.app.api.audio-retrieval.audioSearching",
+        "peekOfCode": "SLIDE = 4\nATB_WEIGHT = 0.5\nRTB_WEIGHT = 0.3\nFTB_WEIGHT = 0.2\ndef extract_features(current_segment: list) -> list:\n        features = []\n        bins_128 = np.arange(0, 128 + 1)\n        ATB = np.histogram(current_segment, bins=bins_128)[0]\n        ATB = ATB / ATB.sum()\n        features.extend(ATB)",
+        "detail": "src.app.api.audio-retrieval.audioSearching",
+        "documentation": {}
+    },
+    {
+        "label": "ATB_WEIGHT",
+        "kind": 5,
+        "importPath": "src.app.api.audio-retrieval.audioSearching",
+        "description": "src.app.api.audio-retrieval.audioSearching",
+        "peekOfCode": "ATB_WEIGHT = 0.5\nRTB_WEIGHT = 0.3\nFTB_WEIGHT = 0.2\ndef extract_features(current_segment: list) -> list:\n        features = []\n        bins_128 = np.arange(0, 128 + 1)\n        ATB = np.histogram(current_segment, bins=bins_128)[0]\n        ATB = ATB / ATB.sum()\n        features.extend(ATB)\n        bins_255 = np.arange(-127, 128 + 1)",
+        "detail": "src.app.api.audio-retrieval.audioSearching",
+        "documentation": {}
+    },
+    {
+        "label": "RTB_WEIGHT",
+        "kind": 5,
+        "importPath": "src.app.api.audio-retrieval.audioSearching",
+        "description": "src.app.api.audio-retrieval.audioSearching",
+        "peekOfCode": "RTB_WEIGHT = 0.3\nFTB_WEIGHT = 0.2\ndef extract_features(current_segment: list) -> list:\n        features = []\n        bins_128 = np.arange(0, 128 + 1)\n        ATB = np.histogram(current_segment, bins=bins_128)[0]\n        ATB = ATB / ATB.sum()\n        features.extend(ATB)\n        bins_255 = np.arange(-127, 128 + 1)\n        RTB_current_segment = []",
+        "detail": "src.app.api.audio-retrieval.audioSearching",
+        "documentation": {}
+    },
+    {
+        "label": "FTB_WEIGHT",
+        "kind": 5,
+        "importPath": "src.app.api.audio-retrieval.audioSearching",
+        "description": "src.app.api.audio-retrieval.audioSearching",
+        "peekOfCode": "FTB_WEIGHT = 0.2\ndef extract_features(current_segment: list) -> list:\n        features = []\n        bins_128 = np.arange(0, 128 + 1)\n        ATB = np.histogram(current_segment, bins=bins_128)[0]\n        ATB = ATB / ATB.sum()\n        features.extend(ATB)\n        bins_255 = np.arange(-127, 128 + 1)\n        RTB_current_segment = []\n        for i in range(len(current_segment) - 1):",
+        "detail": "src.app.api.audio-retrieval.audioSearching",
+        "documentation": {}
+    },
+    {
+        "label": "AUDIO_PATH",
+        "kind": 5,
+        "importPath": "src.app.api.audio-retrieval.audioSearching",
+        "description": "src.app.api.audio-retrieval.audioSearching",
+        "peekOfCode": "AUDIO_PATH = \"./public/uploads/audio/\"\ndatabase_features = []\ndatabase_path = []\ntarget_features = process_audio(AUDIO_PATH + \"peak3.mid\")\nfor i in range(1, 51):\n    print(f\"{i*2}%\")\n    database_features.append(process_audio(AUDIO_PATH + f\"x ({i}).mid\"))\n    database_path.append(f\"x ({i}).mid\")\nresult = find_best_match(target_features, database_features, database_path)\nprint(result)",
+        "detail": "src.app.api.audio-retrieval.audioSearching",
+        "documentation": {}
+    },
+    {
+        "label": "database_features",
+        "kind": 5,
+        "importPath": "src.app.api.audio-retrieval.audioSearching",
+        "description": "src.app.api.audio-retrieval.audioSearching",
+        "peekOfCode": "database_features = []\ndatabase_path = []\ntarget_features = process_audio(AUDIO_PATH + \"peak3.mid\")\nfor i in range(1, 51):\n    print(f\"{i*2}%\")\n    database_features.append(process_audio(AUDIO_PATH + f\"x ({i}).mid\"))\n    database_path.append(f\"x ({i}).mid\")\nresult = find_best_match(target_features, database_features, database_path)\nprint(result)",
+        "detail": "src.app.api.audio-retrieval.audioSearching",
+        "documentation": {}
+    },
+    {
+        "label": "database_path",
+        "kind": 5,
+        "importPath": "src.app.api.audio-retrieval.audioSearching",
+        "description": "src.app.api.audio-retrieval.audioSearching",
+        "peekOfCode": "database_path = []\ntarget_features = process_audio(AUDIO_PATH + \"peak3.mid\")\nfor i in range(1, 51):\n    print(f\"{i*2}%\")\n    database_features.append(process_audio(AUDIO_PATH + f\"x ({i}).mid\"))\n    database_path.append(f\"x ({i}).mid\")\nresult = find_best_match(target_features, database_features, database_path)\nprint(result)",
+        "detail": "src.app.api.audio-retrieval.audioSearching",
+        "documentation": {}
+    },
+    {
+        "label": "target_features",
+        "kind": 5,
+        "importPath": "src.app.api.audio-retrieval.audioSearching",
+        "description": "src.app.api.audio-retrieval.audioSearching",
+        "peekOfCode": "target_features = process_audio(AUDIO_PATH + \"peak3.mid\")\nfor i in range(1, 51):\n    print(f\"{i*2}%\")\n    database_features.append(process_audio(AUDIO_PATH + f\"x ({i}).mid\"))\n    database_path.append(f\"x ({i}).mid\")\nresult = find_best_match(target_features, database_features, database_path)\nprint(result)",
+        "detail": "src.app.api.audio-retrieval.audioSearching",
+        "documentation": {}
+    },
+    {
+        "label": "result",
+        "kind": 5,
+        "importPath": "src.app.api.audio-retrieval.audioSearching",
+        "description": "src.app.api.audio-retrieval.audioSearching",
+        "peekOfCode": "result = find_best_match(target_features, database_features, database_path)\nprint(result)",
+        "detail": "src.app.api.audio-retrieval.audioSearching",
+        "documentation": {}
+    },
+    {
+        "label": "grayscaleConvert",
+        "kind": 2,
+        "importPath": "src.app.api.image-retrieval.imageSearching",
+        "description": "src.app.api.image-retrieval.imageSearching",
+        "peekOfCode": "def grayscaleConvert(image):\n    imgArray = np.asarray(image, dtype=np.float32)\n    redArr = imgArray[:,:,0]\n    greenArr = imgArray[:,:,1]\n    blueArr = imgArray[:,:,2]\n    grayscale = 0.2989*redArr + 0.5870*greenArr + 0.1140*blueArr\n    return grayscale\ndef flattenImage(grayscale_image):\n    M, N = grayscale_image.shape                            # M = baris, N = kolom\n    flattened_vector = []",
+        "detail": "src.app.api.image-retrieval.imageSearching",
+        "documentation": {}
+    },
+    {
+        "label": "flattenImage",
+        "kind": 2,
+        "importPath": "src.app.api.image-retrieval.imageSearching",
+        "description": "src.app.api.image-retrieval.imageSearching",
+        "peekOfCode": "def flattenImage(grayscale_image):\n    M, N = grayscale_image.shape                            # M = baris, N = kolom\n    flattened_vector = []\n    for i in range(M):\n        for j in range(N):\n            flattened_vector.append(grayscale_image[i][j])\n    return np.array(flattened_vector)\ndef standardization(flattenImageSet):\n    sigmaPixel = np.sum(flattenImageSet, axis=0)                # array [jumlah pixel ke-j dari tiap image i]\n    N = flattenImageSet.shape[0]",
+        "detail": "src.app.api.image-retrieval.imageSearching",
+        "documentation": {}
+    },
+    {
+        "label": "standardization",
+        "kind": 2,
+        "importPath": "src.app.api.image-retrieval.imageSearching",
+        "description": "src.app.api.image-retrieval.imageSearching",
+        "peekOfCode": "def standardization(flattenImageSet):\n    sigmaPixel = np.sum(flattenImageSet, axis=0)                # array [jumlah pixel ke-j dari tiap image i]\n    N = flattenImageSet.shape[0]\n    M = flattenImageSet.shape[1]\n    # print(\"N\" + str(N))\n    # print(\"M\" + str(M))\n    mean = sigmaPixel/N\n    standardized = flattenImageSet - mean\n    return standardized, mean\ndef pcaSVD(standarSet, k = 100):",
+        "detail": "src.app.api.image-retrieval.imageSearching",
+        "documentation": {}
+    },
+    {
+        "label": "pcaSVD",
+        "kind": 2,
+        "importPath": "src.app.api.image-retrieval.imageSearching",
+        "description": "src.app.api.image-retrieval.imageSearching",
+        "peekOfCode": "def pcaSVD(standarSet, k = 100):\n    C = (1 / standarSet.shape[0]) * standarSet.T @ standarSet  # C = (1/N) X^T X\n    U, Ev, Ut = np.linalg.svd(C, full_matrices=False)          # U@Ev@Ut = C\n    Uk = U[:,:k]\n    Z = standarSet @ Uk\n    return Z, Uk\ndef similarity(ZqImage, datasetVector, maxResult=60):\n    distances = np.linalg.norm(datasetVector - ZqImage, axis=1)  # axis=1 untuk menghitung jarak per baris\n    sortedIdxImage = np.argsort(distances)\n    sortedDistance = distances[sortedIdxImage]",
+        "detail": "src.app.api.image-retrieval.imageSearching",
+        "documentation": {}
+    },
+    {
+        "label": "similarity",
+        "kind": 2,
+        "importPath": "src.app.api.image-retrieval.imageSearching",
+        "description": "src.app.api.image-retrieval.imageSearching",
+        "peekOfCode": "def similarity(ZqImage, datasetVector, maxResult=60):\n    distances = np.linalg.norm(datasetVector - ZqImage, axis=1)  # axis=1 untuk menghitung jarak per baris\n    sortedIdxImage = np.argsort(distances)\n    sortedDistance = distances[sortedIdxImage]\n    sortedIdxImage = sortedIdxImage[:maxResult]\n    sortedDistance = sortedDistance[:maxResult]\n    idxImg_Distance = [(idx, dist) for idx, dist in zip(sortedIdxImage, sortedDistance)]\n    return idxImg_Distance\ndef processImageFolder(folderPath: str, imgSize=(64,64)):\n    flattenedImageDataset = []",
+        "detail": "src.app.api.image-retrieval.imageSearching",
+        "documentation": {}
+    },
+    {
+        "label": "processImageFolder",
+        "kind": 2,
+        "importPath": "src.app.api.image-retrieval.imageSearching",
+        "description": "src.app.api.image-retrieval.imageSearching",
+        "peekOfCode": "def processImageFolder(folderPath: str, imgSize=(64,64)):\n    flattenedImageDataset = []\n    imagesNameSet = []\n    for filename in os.listdir(folderPath):\n        if filename.endswith(('.png', '.jpg', '.jpeg')):\n            imgPath = os.path.join(folderPath, filename)\n            image = Image.open(imgPath).resize(imgSize)\n            grayscale = grayscaleConvert(image)\n            flattened = flattenImage(grayscale)\n            imagesNameSet.append(filename)",
+        "detail": "src.app.api.image-retrieval.imageSearching",
+        "documentation": {}
+    },
+    {
+        "label": "searchImage",
+        "kind": 2,
+        "importPath": "src.app.api.image-retrieval.imageSearching",
+        "description": "src.app.api.image-retrieval.imageSearching",
+        "peekOfCode": "def searchImage(imagePath: str, folderPath: str, imgSize=(64, 64), k=100, maxResult=5):\n    qImage = Image.open(imagePath).resize(imgSize)\n    qGray = grayscaleConvert(qImage)\n    qFlattened = flattenImage(qGray)\n    # Proses Dataset\n    dataset, imagesNameSet = processImageFolder(folderPath, imgSize)\n    standardizedDataset, mean = standardization(dataset)\n    standardizedQ = qFlattened - mean\n    # PCA untuk proyeksi dataset dan query\n    Z, Uk = pcaSVD(standardizedDataset, k)",
+        "detail": "src.app.api.image-retrieval.imageSearching",
+        "documentation": {}
+    }
+]

@@ -1,8 +1,11 @@
+// src/app/gallery/audio/page.tsx
 "use client";
 
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { useToast } from "@/hooks/use-toast";
 
 interface MappedFile {
   audio: {
@@ -15,19 +18,30 @@ interface MappedFile {
   };
 }
 
+// Tambahkan tipe untuk similarImages
+interface SimilarImage {
+  filename: string;
+  distance: number;
+}
+
 export default function AudioGalleryPage() {
   const [mappedFiles, setMappedFiles] = useState<MappedFile[]>([]);
+  const [filteredFiles, setFilteredFiles] = useState<MappedFile[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const itemsPerPage = 6;
+  const { toast } = useToast();
 
   useEffect(() => {
     async function fetchMappedFiles() {
       try {
         const response = await fetch("/api/mapped-files");
         const data = await response.json();
-        setMappedFiles(data.mappings || []);
-        setTotalPages(Math.ceil((data.mappings || []).length / itemsPerPage));
+        const files = data.mappings || [];
+        setMappedFiles(files);
+        setFilteredFiles(files);
+        setTotalPages(Math.ceil(files.length / itemsPerPage));
       } catch (error) {
         console.error("Error fetching mapped files:", error);
       }
@@ -51,10 +65,102 @@ export default function AudioGalleryPage() {
     };
   }, []);
 
+  const handleImageSearch = async () => {
+    if (!selectedImage) {
+      toast({
+        title: "Error",
+        description: "Silakan pilih gambar terlebih dahulu",
+        variant: "destructive"
+      });
+      return;
+    }
+  
+    try {
+      const formData = new FormData();
+      formData.append('image', selectedImage);
+  
+      const response = await fetch('/api/image-search', {
+        method: 'POST',
+        body: formData
+      });
+  
+      const result = await response.json();
+  
+      if (response.ok) {
+        // Filter mapped files based on search results
+        const similarFiles = result.similarImages
+          .map((similarImage: SimilarImage) => 
+            mappedFiles.find(file => file.image.name === similarImage.filename)
+          )
+          .filter(Boolean);
+  
+        setFilteredFiles(similarFiles);
+        setTotalPages(Math.ceil(similarFiles.length / itemsPerPage));
+        setCurrentPage(1);
+  
+        if (similarFiles.length === 0) {
+          toast({
+            title: "Informasi",
+            description: "Tidak ditemukan file audio yang mirip",
+            variant: "default"
+          });
+        }
+      } else {
+        toast({
+          title: "Error",
+          description: result.error || "Gagal mencari gambar",
+          variant: "destructive"
+        });
+      }
+    } catch (error) {
+      console.error('Image search error:', error);
+      toast({
+        title: "Error",
+        description: "Gagal melakukan pencarian gambar",
+        variant: "destructive"
+      });
+    }
+  };
+  
+
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      // Validasi tipe file (hanya gambar)
+      if (!file.type.startsWith('image/')) {
+        toast({
+          title: "Error",
+          description: "Silakan pilih file gambar",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      // Validasi ukuran file (maks 10MB)
+      if (file.size > 10 * 1024 * 1024) {
+        toast({
+          title: "Error",
+          description: "Ukuran file terlalu besar (maks 10MB)",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      setSelectedImage(file);
+    }
+  };
+
+  const resetSearch = () => {
+    setFilteredFiles(mappedFiles);
+    setTotalPages(Math.ceil(mappedFiles.length / itemsPerPage));
+    setCurrentPage(1);
+    setSelectedImage(null);
+  };
+
   // Pagination logic
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentMappedFiles = mappedFiles.slice(startIndex, endIndex);
+  const currentMappedFiles = filteredFiles.slice(startIndex, endIndex);
 
   const handlePrevPage = () => {
     if (currentPage > 1) {
@@ -71,6 +177,36 @@ export default function AudioGalleryPage() {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-6">Audio Gallery</h1>
+
+      {/* Image Search Section */}
+      <div className="mb-6 flex items-center space-x-4">
+        <Input 
+          type="file" 
+          accept="image/*"
+          onChange={handleImageChange}
+          className="w-full max-w-md"
+        />
+        <Button 
+          onClick={handleImageSearch}
+          disabled={!selectedImage}
+          className=""
+        >
+          Cari Gambar Serupa
+        </Button>
+        <Button 
+          onClick={resetSearch}
+          variant="outline"
+          className=""
+        >
+          Reset
+        </Button>
+      </div>
+
+      {selectedImage && (
+        <div className="mb-4">
+          <p>Gambar yang dipilih: {selectedImage.name}</p>
+        </div>
+      )}
 
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         {currentMappedFiles.map((file) => (
