@@ -9,32 +9,6 @@ ATB_WEIGHT = 0.5
 RTB_WEIGHT = 0.3
 FTB_WEIGHT = 0.2
 
-'''
-class Features:
-    def __init__(self):
-        self.ATB = None
-        self.RTB = None
-        self.FTB = None
-
-    def extract_features(self, current_segment):
-        bins_128 = np.arange(0, 128 + 1)
-        self.ATB = np.histogram(current_segment, bins=bins_128)[0]
-        self.ATB = self.ATB / self.ATB.sum()
-
-        bins_255 = np.arange(-127, 128 + 1)
-        RTB_current_segment = []
-        for i in range(len(current_segment) - 1):
-            RTB_current_segment.append(current_segment[i + 1] - current_segment[i])
-        self.RTB = np.histogram(RTB_current_segment, bins=bins_255)[0]
-        self.RTB = self.RTB / self.RTB.sum()
-
-        FTB_current_segment = []
-        for i in range(len(current_segment) - 1):
-            FTB_current_segment.append(current_segment[i + 1] - current_segment[0])
-        self.FTB = np.histogram(FTB_current_segment, bins=bins_255)[0]
-        self.FTB = self.FTB / self.FTB.sum()
-'''
-
 def extract_features(current_segment: list) -> list:
         features = []
 
@@ -180,24 +154,3 @@ for i in range(1, 51):
 result = find_best_match(target_features, database_features, database_path)
 
 print(result)
-
-'''
-for i in range(1, 51):
-    print(f"{i*2}%")
-    database_features.append(process_audio(f"./testing/data/x ({i}).mid"))
-
-best_scores = []
-for i in range(50):
-    audio_features = database_features[i]
-    max = 0
-    for track1 in target_features:
-        for track2 in audio_features:
-            for feature1, feature2 in zip(track1, track2):
-                score = compare_features(feature1, feature2)
-                if score > max:
-                    max = float(score)
-    best_scores.append((i+1, max))
-
-best_scores.sort(key=lambda x: x[1], reverse=True)
-print(best_scores)
-'''
