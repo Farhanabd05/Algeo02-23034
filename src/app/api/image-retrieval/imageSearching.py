@@ -4,6 +4,7 @@ from PIL import Image
 import os
 import sys
 import json
+import basic_pitch
 def grayscaleConvert(image):
     imgArray = np.asarray(image, dtype=np.float32)
     redArr = imgArray[:,:,0]
