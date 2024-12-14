@@ -1,5 +1,6 @@
 import mido
 import numpy as np
+from dataclasses import dataclass
 # import matplotlib.pyplot as plt
 
 SEGMENT = 20
@@ -9,35 +10,46 @@ ATB_WEIGHT = 0.5
 RTB_WEIGHT = 0.3
 FTB_WEIGHT = 0.2
 
-def extract_features(current_segment: list) -> list:
-        features = []
+@dataclass
+class Features:
+    ATB: list[int]
+    RTB: list[int]
+    FTB: list[int]
+    ATB_norm: float
+    RTB_norm: float
+    FTB_norm: float
 
+def extract_features(current_segment: list[int]) -> Features:
+        features = Features()
+
+        # extract ATB feature
         bins_128 = np.arange(0, 128 + 1)
         ATB = np.histogram(current_segment, bins=bins_128)[0]
-        ATB = ATB / ATB.sum()
+        features.ATB = ATB / ATB.sum()
 
-        features.extend(ATB)
-
+        # extract RTB feature
         bins_255 = np.arange(-127, 128 + 1)
         RTB_current_segment = []
         for i in range(len(current_segment) - 1):
             RTB_current_segment.append(current_segment[i + 1] - current_segment[i])
         RTB = np.histogram(RTB_current_segment, bins=bins_255)[0]
-        RTB = RTB / RTB.sum()
+        features.RTB = RTB / RTB.sum()
 
-        features.extend(RTB)
-
+        # extract FTB feature
         FTB_current_segment = []
         for i in range(len(current_segment) - 1):
             FTB_current_segment.append(current_segment[i + 1] - current_segment[0])
         FTB = np.histogram(FTB_current_segment, bins=bins_255)[0]
-        FTB = FTB / FTB.sum()
+        features.FTB = FTB / FTB.sum()
 
-        features.extend(FTB)
+        # norm features
+        features.ATB_norm = np.linalg.norm(features.ATB)
+        features.RTB_norm = np.linalg.norm(features.RTB)
+        features.FTB_norm = np.linalg.norm(features.FTB)
 
         return features
 
-def process_audio(path: str):
+def process_audio(path: str) -> list[Features]:
     midi_file = mido.MidiFile(path)
 
     ticks_per_beat = midi_file.ticks_per_beat
@@ -106,19 +118,19 @@ def process_audio(path: str):
 
     return music_features
 
-def minmax_normalize(array: list) -> list:
+def minmax_normalize(array: list[int]) -> list:
     return (array - np.min(array)) / (np.max(array) - np.min(array))
 
-def standard_normalize(array: list) -> list:
+def standard_normalize(array: list[int]) -> list:
     return (array - np.mean(array)) / np.std(array)
 
-def cosine_similarity(v1: np.ndarray, v2: np.ndarray) -> float:
-    return np.dot(v1, v2) / (np.linalg.norm(v1) * np.linalg.norm(v2))
+def cosine_similarity(v1: list[int], v2: list[int], norm1: int, norm2: int) -> float:
+    return np.dot(v1, v2) / (norm1 * norm2)
 
-def compare_features(features1: list, features2: list, atb_weight: int = ATB_WEIGHT, rtb_weight: int = RTB_WEIGHT, ftb_weight: int = FTB_WEIGHT) -> float:
-    return cosine_similarity(features1[0:128], features2[0:128]) * atb_weight + cosine_similarity(features1[128:383], features2[128:383]) * rtb_weight + cosine_similarity(features1[383:638], features2[383:638]) * ftb_weight
+def compare_features(features1: Features, features2: Features, atb_weight: int = ATB_WEIGHT, rtb_weight: int = RTB_WEIGHT, ftb_weight: int = FTB_WEIGHT) -> float:
+    return cosine_similarity(features1.ATB, features2.ATB, features1.ATB_norm, features2.ATB_norm) * atb_weight + cosine_similarity(features1.RTB, features2.RTB, features1.RTB_norm, features2.RTB_norm) * rtb_weight + cosine_similarity(features1.FTB, features2.FTB, features1.FTB_norm, features2.FTB_norm) * ftb_weight
 
-def compare_music(music1: list, music2: list) -> float:
+def compare_music(music1: list[Features], music2: list[Features]) -> float:
     max = 0
     for feature1 in music1:
         for feature2 in music2:
@@ -127,7 +139,7 @@ def compare_music(music1: list, music2: list) -> float:
                 max = float(score)
     return max
 
-def find_best_match(music: list, database_features: list, database_path: list) -> list[tuple[str, float]]:
+def find_best_match(music: list[Features], database_features: list[Features], database_path: list[str]) -> list[tuple[str, float]]:
     best_scores = []
 
     length = len(database_features)
@@ -139,18 +151,19 @@ def find_best_match(music: list, database_features: list, database_path: list) -
     return best_scores
 
 # Testing
-AUDIO_PATH = "./public/uploads/audio/"
+if __name__ == "__main__":
+    AUDIO_PATH = "./public/uploads/audio/"
 
-database_features = []
-database_path = []
+    database_features = []
+    database_path = []
 
-target_features = process_audio(AUDIO_PATH + "peak3.mid")
+    target_features = process_audio(AUDIO_PATH + "peak3.mid")
 
-for i in range(1, 51):
-    print(f"{i*2}%")
-    database_features.append(process_audio(AUDIO_PATH + f"x ({i}).mid"))
-    database_path.append(f"x ({i}).mid")
+    for i in range(1, 51):
+        print(f"{i*2}%")
+        database_features.append(process_audio(AUDIO_PATH + f"x ({i}).mid"))
+        database_path.append(f"x ({i}).mid")
 
-result = find_best_match(target_features, database_features, database_path)
+    result = find_best_match(target_features, database_features, database_path)
 
-print(result)
+    print(result)
