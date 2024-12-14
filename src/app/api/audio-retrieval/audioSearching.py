@@ -20,7 +20,7 @@ class Features:
     FTB_norm: float
 
 def extract_features(current_segment: list[int]) -> Features:
-        features = Features()
+        features = Features([], [], [], 0, 0, 0)
 
         # extract ATB feature
         bins_128 = np.arange(0, 128 + 1)
@@ -157,7 +157,7 @@ if __name__ == "__main__":
     database_features = []
     database_path = []
 
-    target_features = process_audio(AUDIO_PATH + "peak3.mid")
+    target_features = process_audio(AUDIO_PATH + "x (3).mid")
 
     for i in range(1, 51):
         print(f"{i*2}%")
