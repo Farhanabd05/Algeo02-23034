@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
         const imageDirectory = path.join(process.cwd(), 'public', 'uploads', 'image');
 
         // Jalankan skrip Python untuk pencarian gambar
-        const pythonScriptPath = path.join(process.cwd(), 'src', 'app', 'api', 'image-retrieval', 'imageSearching.py');
+        const pythonScriptPath = path.join(process.cwd(), 'src', 'app', 'api', 'image-retrieval', 'LoadAndSearch.py');
         const command = `python "${pythonScriptPath}" "${imagePath}" "${imageDirectory}"`;
 
         console.log('Executing Python script with command:', command);

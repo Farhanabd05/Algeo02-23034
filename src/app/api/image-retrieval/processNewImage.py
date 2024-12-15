@@ -2,7 +2,8 @@ import numpy as np
 import pandas as pd
 from PIL import Image
 import os
-
+import argparse
+from os import path
 def grayscaleConvert(image):
     imgArray = np.asarray(image, dtype=np.float32)
     redArr = imgArray[:,:,0]
@@ -36,12 +37,14 @@ def processImageFolder(folderPath: str, imgSize=(50,50)):
     imagesNameSet = np.array(imagesNameSet)
 
     np.savetxt('ImgName.txt', imagesNameSet, fmt='%s')      # save to txt
-    np.savetxt('dataset.txt', dataset)
+    np.savetxt('imgDataset.txt', dataset)
     return dataset, imagesNameSet
 
 def inputNewImage(folderPath:str, imgSize=(50,50)):
-    dataset = np.loadtxt('dataset.txt')
-    imagesNameSet = pd.read_csv('ImgName.txt', header=None).squeeze().values
+    path_to_dataset = os.path.join(os.getcwd(), 'database', 'imgDataset.txt')
+    path_to_imgName = os.path.join(os.getcwd(), 'database', 'ImgName.txt')
+    dataset = np.loadtxt(path_to_dataset)
+    imagesNameSet = pd.read_csv(path_to_imgName, header=None).squeeze().values
 
     for filename in os.listdir(folderPath):
         if filename.endswith(('.png', '.jpg', '.jpeg')):
@@ -50,10 +53,15 @@ def inputNewImage(folderPath:str, imgSize=(50,50)):
             grayscale = grayscaleConvert(image)
             flattened = flattenImage(grayscale)
 
-            dataset.append(flattened)
-            imagesNameSet = df.to
-
-    np.savetxt('ImgName.txt', imagesNameSet, fmt='%s')
-    np.savetxt('dataset.txt', dataset)
+            dataset = np.append(dataset, [flattened], axis=0)
+            imagesNameSet = np.append(imagesNameSet, filename)
+    np.savetxt(path_to_imgName, imagesNameSet, fmt='%s')
+    np.savetxt(path_to_dataset, dataset)
     print("Proses Memasukan Gambar baru selesai")
     return
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--folder', help='Path to folder')
+    args = parser.parse_args()
+    inputNewImage(args.folder)

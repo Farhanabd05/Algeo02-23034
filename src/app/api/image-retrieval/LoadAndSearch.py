@@ -3,13 +3,14 @@ from PIL import Image
 import pandas as pd
 from processNewImage import grayscaleConvert, flattenImage
 import os
-
+import sys
+import json
 def standardization(flattenImageSet):
     sigmaPixel = np.sum(flattenImageSet, axis=0) # array [jumlah pixel ke-j dari tiap image i]
     N = flattenImageSet.shape[0]
     M = flattenImageSet.shape[1]
-    print("N" + str(N))
-    print("M" + str(M))
+    # print("N" + str(N))
+    # print("M" + str(M))
     mean = sigmaPixel/N
     standardized = flattenImageSet - mean
     return standardized, mean
@@ -35,7 +36,7 @@ def similarity(query_vector, dataset_vectors, max_results=60):
     closest_distances = sorted_distances[:max_results]
     
     # Gabungkan index dan distance menjadi list of tuples
-    list_tuples = [(idx, dist) for idx, dist in zip(closest_indices, closest_distances)]
+    list_tuples = [(idx, dist) for idx, dist in zip(sorted_indices, sorted_distances)]
     
     return list_tuples
 
@@ -44,42 +45,53 @@ def searchImage(imagePath: str, folderPath: str, imgSize=(50, 50), k=100, maxRes
     qGray = grayscaleConvert(qImage)
     qFlattened = flattenImage(qGray)
     
-
+    path_to_dataset = os.path.join(os.getcwd(), 'database', 'imgDataset.txt')
+    path_to_imgName = os.path.join(os.getcwd(), 'database', 'ImgName.txt')
     #load data
-    dataset = np.loadtxt('src/app/api/image-retrieval/dataset.txt')
-    imagesNameSet = pd.read_csv('src/app/api/image-retrieval/imgName.txt', header=None).squeeze().values
+    dataset = np.loadtxt(path_to_dataset)
+    imagesNameSet = pd.read_csv(path_to_imgName, header=None).squeeze().values
 
-    print("process img folder")
     standardizedDataset, mean = standardization(dataset)
     standardizedQ = qFlattened - mean   # (q' - mean)
-    print("proses standar udah")
 
     # Apply PCA untuk proyeksi dataset dan query
     Z, Uk = pcaSVD(standardizedDataset, k)
-    print("svd")
     ZqImage = standardizedQ @ Uk  # q =  (q' - mean) Uk
-    print("proyeksi")
 
     # Find closest images using similarity
     closest_images = similarity(ZqImage, Z, maxResult)
-    print("similarity")
 
     # Format hasil: kembalikan nama gambar beserta persentase kedekatan
-    results = [(imagesNameSet[idx], percentage) for idx, percentage in closest_images]
-    return results
+    results = [
+        {
+            'filename': imagesNameSet[idx], 
+            'distance': float(dist)  # convert to native float
+        } 
+        for idx, dist in closest_images
+    ]
+        
+    # Cetak sebagai JSON agar mudah dibaca di sisi server
+    print(json.dumps(results))
 
 
 
-query_image_path = "src/app/api/image-retrieval/【オリジナルMV】VALIS − 022「無窮プラトニック」【VALIS合唱】.jpg"  #"C:/Users/Muzaraar/Documents/Kuliah/Kelas_Kuliah/Semester_3/Algeo Tubes 2/hq720.jpg"
-dataset_dir = "C:/Users/Muzaraar/Documents/Kuliah/Kelas_Kuliah/Semester_3/Algeo Tubes 2/dataGambar"
-#"C:/Users/Muzaraar/Documents/Kuliah/Kelas_Kuliah\Semester_3\Algeo Tubes 2\WIN_20241113_20_26_36_Pro.jpg"
-results = searchImage(query_image_path, dataset_dir, imgSize=(50, 50), k=100, maxResult=20)
+# query_image_path = "src/app/api/image-retrieval/【オリジナルMV】VALIS − 022「無窮プラトニック」【VALIS合唱】.jpg"  #"C:/Users/Muzaraar/Documents/Kuliah/Kelas_Kuliah/Semester_3/Algeo Tubes 2/hq720.jpg"
+# dataset_dir = "C:/Users/Muzaraar/Documents/Kuliah/Kelas_Kuliah/Semester_3/Algeo Tubes 2/dataGambar"
+# #"C:/Users/Muzaraar/Documents/Kuliah/Kelas_Kuliah\Semester_3\Algeo Tubes 2\WIN_20241113_20_26_36_Pro.jpg"
+# results = searchImage(query_image_path, dataset_dir, imgSize=(50, 50), k=100, maxResult=20)
 
-print("Gambar terdekat (nama file, persentase kedekatan):")
-for filename, percentage in results:
-    print(f"File: {filename}, Kedekatan: {percentage:.2f}")
+# print("Gambar terdekat (nama file, persentase kedekatan):")
+# for filename, percentage in results:
+#     print(f"File: {filename}, Kedekatan: {percentage:.2f}")
 
+if __name__ == "__main__":
+    if len(sys.argv) < 3:
+        print("Usage: python LoadAndSearch.py <query_image_path> <dataset_dir>")
+        sys.exit(1)
 
+    query_image_path = sys.argv[1]
+    dataset_dir = sys.argv[2]
+    searchImage(query_image_path, dataset_dir)
 
 
 
