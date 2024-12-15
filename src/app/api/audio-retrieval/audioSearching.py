@@ -1,15 +1,16 @@
 # src/app/api/audio-retrieval/audioSearching
-
+import os
 import mido
 import numpy as np
 from dataclasses import dataclass
-# import matplotlib.pyplot as plt
 
 SEGMENT = 20
-SLIDE = 4
-ATB_WEIGHT = 0.5
-RTB_WEIGHT = 0.3
-FTB_WEIGHT = 0.2
+SLIDE = 2
+ATB_WEIGHT = 0.33
+RTB_WEIGHT = 0.33
+FTB_WEIGHT = 0.33
+
+database = []
 
 @dataclass
 class Features:
@@ -69,8 +70,6 @@ def process_audio(path: str) -> list[Features]:
         start_idx = 0
         end_idx = 0
         start_window = 0
-        active_notes = {}
-        disactive_notes = {}
         current_segment = []
 
         # Sliding window
@@ -82,31 +81,27 @@ def process_audio(path: str) -> list[Features]:
 
                 if isinstance(msg, mido.Message) and msg.type in ['note_on', 'note_off']:
                     if msg.type == "note_on":
-                        active_notes[msg.note] = cumulative_ticks[end_idx]
-                    elif msg.type in ['note_off', 'note_on']:
-                        if msg.note in active_notes:
-                            for _ in range(cumulative_ticks[end_idx] - active_notes[msg.note]):
-                                current_segment.append(msg.note)
-                            active_notes.pop(msg.note)
+                        current_segment.append(msg.note)
                 end_idx += 1
 
+            if end_idx == len(cumulative_ticks):
+                break
+
             # Sliding the start idx
+            counter = 0
             while start_idx < len(cumulative_ticks) and cumulative_ticks[start_idx] < start_window:
                 msg = track[start_idx]
 
                 if isinstance(msg, mido.Message) and msg.type in ['note_on', 'note_off']:
                     if msg.type == "note_on":
-                        disactive_notes[msg.note] = cumulative_ticks[start_idx]
-                    elif msg.type in ['note_off', 'note_on']:
-                        if msg.note in disactive_notes:
-                            for _ in range(cumulative_ticks[start_idx] - disactive_notes[msg.note]):
-                                current_segment.pop(0)
-                            disactive_notes.pop(msg.note)
+                        counter += 1
 
                 start_idx += 1
+            
+            current_segment = current_segment[counter:]
 
             # Skipping if the segment is too short
-            if len(current_segment) <= 20 and len(set(current_segment)) <= 2:
+            if len(current_segment) <= 4 and len(set(current_segment)) <= 2:
                 start_window += slide_length
                 continue
             
@@ -140,31 +135,38 @@ def compare_music(music1: list[Features], music2: list[Features]) -> float:
                 max = float(score)
     return max
 
-def find_best_match(music: list[Features], database_features: list[Features], database_path: list[str]) -> list[tuple[str, float]]:
+def find_best_match(music: list[Features], db: list[tuple[list[Features], list[str]]]) -> list[tuple[str, float]]:
     best_scores = []
 
-    length = len(database_features)
-    for i in range(length):
-        score = compare_music(music, database_features[i])
-        best_scores.append((database_path[i], score))
+    for file_name, features in db:
+        score = compare_music(music, features)
+        best_scores.append((file_name, score))
 
     best_scores.sort(key=lambda x: x[1], reverse=True)
     return best_scores
 
+def process_database(database_path: str):
+    paths = [f for f in os.listdir(database_path) if os.path.isfile(os.path.join(database_path, f))]
+
+    length = len(paths)
+    for i, file_name in enumerate(paths):
+        print(f"Processing {file_name} ({i+1}/{length})")
+        database.append((file_name, process_audio(database_path + file_name)))
+
+def search_music(music_path: str, max_result: int) -> list[tuple[str, float]]:
+    music = process_audio(music_path)
+    return find_best_match(music, database)[:max_result]
+
+def print_results(results: list[tuple[str, float]]):
+    for i in range(len(results)):
+        print(f"{i+1}.",results[i][0], results[i][1])
+
 # Testing
 if __name__ == "__main__":
-    AUDIO_PATH = "./public/uploads/audio/"
+    DATABASE_PATH = "./public/uploads/audio/"
+    QUERY_PATH = "./public/query/audio/"
 
-    database_features = []
-    database_path = []
+    process_database(DATABASE_PATH)
+    result = search_music(QUERY_PATH + "input_basic_pitch.mid", 5)
 
-    target_features = process_audio(AUDIO_PATH + "x (3).mid")
-
-    for i in range(1, 51):
-        print(f"{i*2}%")
-        database_features.append(process_audio(AUDIO_PATH + f"x ({i}).mid"))
-        database_path.append(f"x ({i}).mid")
-
-    result = find_best_match(target_features, database_features, database_path)
-
-    print(result)
+    print_results(result)
