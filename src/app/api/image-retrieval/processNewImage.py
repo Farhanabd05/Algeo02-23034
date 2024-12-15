@@ -43,7 +43,15 @@ def inputNewImage(folderPath:str, imgSize=(50,50)):
     dataset = np.loadtxt('dataset.txt')
     imagesNameSet = pd.read_csv('ImgName.txt', header=None).squeeze().values
 
-    
+    for filename in os.listdir(folderPath):
+        if filename.endswith(('.png', '.jpg', '.jpeg')):
+            imgPath = os.path.join(folderPath, filename)
+            image = Image.open(imgPath).resize(imgSize)
+            grayscale = grayscaleConvert(image)
+            flattened = flattenImage(grayscale)
+
+            dataset.append(flattened)
+            imagesNameSet = df.to
 
     np.savetxt('ImgName.txt', imagesNameSet, fmt='%s')
     np.savetxt('dataset.txt', dataset)

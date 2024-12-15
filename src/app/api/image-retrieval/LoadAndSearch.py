@@ -43,10 +43,11 @@ def searchImage(imagePath: str, folderPath: str, imgSize=(50, 50), k=100, maxRes
     qImage = Image.open(imagePath).resize(imgSize)
     qGray = grayscaleConvert(qImage)
     qFlattened = flattenImage(qGray)
+    
 
     #load data
-    dataset = np.loadtxt('dataset.txt')
-    imagesNameSet = pd.read_csv('ImgName.txt', header=None).squeeze().values
+    dataset = np.loadtxt('src/app/api/image-retrieval/dataset.txt')
+    imagesNameSet = pd.read_csv('src/app/api/image-retrieval/imgName.txt', header=None).squeeze().values
 
     print("process img folder")
     standardizedDataset, mean = standardization(dataset)
@@ -69,7 +70,7 @@ def searchImage(imagePath: str, folderPath: str, imgSize=(50, 50), k=100, maxRes
 
 
 
-query_image_path = "WIN_20241113_20_26_36_Pro.jpg"#"C:/Users/Muzaraar/Documents/Kuliah/Kelas_Kuliah/Semester_3/Algeo Tubes 2/hq720.jpg"
+query_image_path = "src/app/api/image-retrieval/【オリジナルMV】VALIS − 022「無窮プラトニック」【VALIS合唱】.jpg"  #"C:/Users/Muzaraar/Documents/Kuliah/Kelas_Kuliah/Semester_3/Algeo Tubes 2/hq720.jpg"
 dataset_dir = "C:/Users/Muzaraar/Documents/Kuliah/Kelas_Kuliah/Semester_3/Algeo Tubes 2/dataGambar"
 #"C:/Users/Muzaraar/Documents/Kuliah/Kelas_Kuliah\Semester_3\Algeo Tubes 2\WIN_20241113_20_26_36_Pro.jpg"
 results = searchImage(query_image_path, dataset_dir, imgSize=(50, 50), k=100, maxResult=20)
