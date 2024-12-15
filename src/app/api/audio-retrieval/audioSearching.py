@@ -1,8 +1,15 @@
 # src/app/api/audio-retrieval/audioSearching
 import os
 import mido
+import pickle
 import numpy as np
 from dataclasses import dataclass
+import json
+import sys
+
+DATABASE_PATH = os.path.join(os.getcwd(), "public", "uploads", "audio")
+QUERY_PATH = os.path.join(os.getcwd(), "public", "query", "audio")
+PKL_PATH = os.path.join(os.getcwd(), "database", "audioDataset.pkl")
 
 SEGMENT = 20
 SLIDE = 2
@@ -145,28 +152,31 @@ def find_best_match(music: list[Features], db: list[tuple[list[Features], list[s
     best_scores.sort(key=lambda x: x[1], reverse=True)
     return best_scores
 
-def process_database(database_path: str):
-    paths = [f for f in os.listdir(database_path) if os.path.isfile(os.path.join(database_path, f))]
-
-    length = len(paths)
-    for i, file_name in enumerate(paths):
-        print(f"Processing {file_name} ({i+1}/{length})")
-        database.append((file_name, process_audio(database_path + file_name)))
-
 def search_music(music_path: str, max_result: int) -> list[tuple[str, float]]:
+    if os.path.splitext(music_path)[1] != ".mid":
+        music_path = os.path.splitext(music_path)[0] + "_basic_pitch.mid"
+
     music = process_audio(music_path)
     return find_best_match(music, database)[:max_result]
 
 def print_results(results: list[tuple[str, float]]):
-    for i in range(len(results)):
-        print(f"{i+1}.",results[i][0], results[i][1])
+    
+    json_results = [
+        {
+            'filename': result[0],
+            'score': result[1] * 100
+        }
+        for result in results
+    ]
 
-# Testing
+    print(json.dumps(json_results))
+
 if __name__ == "__main__":
-    DATABASE_PATH = "./public/uploads/audio/"
-    QUERY_PATH = "./public/query/audio/"
+    with open(PKL_PATH, "rb") as file:
+        database: list[tuple[str, Features]] = pickle.load(file)
 
-    process_database(DATABASE_PATH)
-    result = search_music(QUERY_PATH + "input_basic_pitch.mid", 5)
+    query_audio_path = sys.argv[1]
 
-    print_results(result)
+    results = search_music(query_audio_path, 5)
+
+    print_results(results)
