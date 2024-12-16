@@ -12,7 +12,7 @@ QUERY_PATH = os.path.join(os.getcwd(), "public", "query", "audio")
 PKL_PATH = os.path.join(os.getcwd(), "database", "audioDataset.pkl")
 
 SEGMENT = 20
-SLIDE = 2
+SLIDE = 1
 ATB_WEIGHT = 0.33
 RTB_WEIGHT = 0.33
 FTB_WEIGHT = 0.33
@@ -108,7 +108,7 @@ def process_audio(path: str) -> list[Features]:
             current_segment = current_segment[counter:]
 
             # Skipping if the segment is too short
-            if len(current_segment) <= 4 and len(set(current_segment)) <= 2:
+            if len(current_segment) <= 4 or len(set(current_segment)) <= 8:
                 start_window += slide_length
                 continue
             

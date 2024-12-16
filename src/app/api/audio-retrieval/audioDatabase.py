@@ -5,8 +5,8 @@ from basic_pitch import ICASSP_2022_MODEL_PATH
 from audioSearching import process_audio, Features
 import pickle
 
-DATABASE_PATH = os.path.join(os.getcwd(), "public", "uploads", "audio")
-TEMP_PATH = os.path.join(os.getcwd(), "public", "uploads", "audio-temp")
+DATABASE_PATH = os.path.join(os.getcwd(), "public", "uploads", "audio") + "/"
+TEMP_PATH = os.path.join(os.getcwd(), "public", "uploads", "audio-temp") + "/"
 PKL_PATH = os.path.join(os.getcwd(), "database", "audioDataset.pkl")
 
 def process_database(database_path: str, temp_path: str = TEMP_PATH) -> list[tuple[str, Features]]:
@@ -29,8 +29,10 @@ def process_database(database_path: str, temp_path: str = TEMP_PATH) -> list[tup
             ext = os.path.splitext(file_name)[1].lower()
 
             if ext == ".mid":
-                # Directly copy .mid files
+                # Directly process .mid files
                 database.append((file_name, process_audio(database_path + file_name)))
+            elif os.path.exists(temp_path + os.path.splitext(os.path.basename(file_name))[0] + "_basic_pitch.mid"):
+                database.append((file_name, process_audio(temp_path + os.path.splitext(os.path.basename(file_name))[0] + "_basic_pitch.mid")))
             else:
                 # Stash the non-midi files
                 nonmidi_files.append(database_path + file_name)
