@@ -177,6 +177,6 @@ if __name__ == "__main__":
 
     query_audio_path = sys.argv[1]
 
-    results = search_music(query_audio_path, 5)
+    results = search_music(query_audio_path, 20)
 
     print_results(results)
