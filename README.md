@@ -18,6 +18,11 @@ Before running the application, ensure you have the following installed:
 - **React**: Version `18`
 - **Next.js**: Version `15`
 
+To install React and Next.js:
+```bash
+npm install react@18 next@15
+```
+
 ### Python Dependencies and Virtual Environment
 1. Create a virtual environment:
    ```bash
