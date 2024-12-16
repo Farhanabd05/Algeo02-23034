@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Multimedia Retrieval System
+An advanced multimedia retrieval system that supports both **image** and **audio** searching, along with ZIP and mapper uploads.
+
+## Built With
+- **Next.js**: A React framework for building web applications.
+- **Tailwind CSS**: A utility-first CSS framework for styling.
+- **Python**: Backend logic for audio and image processing.
+
+## Features
+- **Image Retrieval**: Supports file types such as `jpg`, `png`, and `jpeg`.
+- **Audio Retrieval**: Supports file types such as `mp3`, `wav`, and `midi`.
+- **ZIP Upload**: Upload a ZIP file to extract and process its contents.
+- **Mapper Upload**: Custom mapper functionality to match files.
 
 ## Getting Started
+### Prerequisites
+Before running the application, ensure you have the following installed:
+- **React**: Version `18`
+- **Next.js**: Version `15`
 
-First, run the development server:
-
+To install React and Next.js:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install react@18 next@15
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Python Dependencies and Virtual Environment
+1. Create a virtual environment:
+   ```bash
+   python -m venv venv
+   ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+2. Activate the virtual environment:
+   - On Windows:
+     ```bash
+     venv\Scripts\activate
+     ```
+   - On macOS/Linux:
+     ```bash
+     source venv/bin/activate
+     ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. Install the required Python dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-## Learn More
+## Installation
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/Farhanabd05/Algeo02-23034.git
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+2. **Navigate to the Project Directory**
+   ```bash
+   cd Algeo02-23034
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. **Install NPM Packages**
+   ```bash
+   npm install
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Usage
+To start the application in development mode, run:
+```bash
+npm run dev
+```
