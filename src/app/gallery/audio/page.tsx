@@ -245,7 +245,7 @@ export default function AudioSearchingPage() {
   
             {selectedAudio && (
               <div className="mb-4">
-                <p>Gambar yang dipilih: {selectedAudio.name}</p>
+                <p>Audio yang dipilih: {selectedAudio.name}</p>
               </div>
             )}
   
