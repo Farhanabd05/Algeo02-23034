@@ -93,6 +93,15 @@
         "documentation": {}
     },
     {
+        "label": "basic_pitch",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "basic_pitch",
+        "description": "basic_pitch",
+        "detail": "basic_pitch",
+        "documentation": {}
+    },
+    {
         "label": "pandas",
         "kind": 6,
         "isExtraImport": true,
