@@ -94,6 +94,8 @@ def searchImage(imagePath: str, folderPath: str, imgSize=(64, 64), k=100, maxRes
     print(json.dumps(results))
 
 
+
+
 if __name__ == "__main__":
     if len(sys.argv) < 3:
         print("Usage: python imageSearching.py <query_image_path> <dataset_dir>")

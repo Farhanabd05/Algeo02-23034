@@ -51,11 +51,35 @@
         "documentation": {}
     },
     {
+        "label": "Image",
+        "importPath": "PIL",
+        "description": "PIL",
+        "isExtraImport": true,
+        "detail": "PIL",
+        "documentation": {}
+    },
+    {
+        "label": "Image",
+        "importPath": "PIL",
+        "description": "PIL",
+        "isExtraImport": true,
+        "detail": "PIL",
+        "documentation": {}
+    },
+    {
         "label": "os",
         "kind": 6,
         "isExtraImport": true,
         "importPath": "os",
         "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "path",
+        "importPath": "os",
+        "description": "os",
+        "isExtraImport": true,
         "detail": "os",
         "documentation": {}
     },
@@ -75,6 +99,40 @@
         "importPath": "basic_pitch",
         "description": "basic_pitch",
         "detail": "basic_pitch",
+        "documentation": {}
+    },
+    {
+        "label": "pandas",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pandas",
+        "description": "pandas",
+        "detail": "pandas",
+        "documentation": {}
+    },
+    {
+        "label": "grayscaleConvert",
+        "importPath": "processNewImage",
+        "description": "processNewImage",
+        "isExtraImport": true,
+        "detail": "processNewImage",
+        "documentation": {}
+    },
+    {
+        "label": "flattenImage",
+        "importPath": "processNewImage",
+        "description": "processNewImage",
+        "isExtraImport": true,
+        "detail": "processNewImage",
+        "documentation": {}
+    },
+    {
+        "label": "argparse",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "argparse",
+        "description": "argparse",
+        "detail": "argparse",
         "documentation": {}
     },
     {
@@ -471,6 +529,78 @@
         "description": "src.app.api.image-retrieval.imageSearching",
         "peekOfCode": "def searchImage(imagePath: str, folderPath: str, imgSize=(64, 64), k=100, maxResult=5):\n    qImage = Image.open(imagePath).resize(imgSize)\n    qGray = grayscaleConvert(qImage)\n    qFlattened = flattenImage(qGray)\n    # Proses Dataset\n    dataset, imagesNameSet = processImageFolder(folderPath, imgSize)\n    standardizedDataset, mean = standardization(dataset)\n    standardizedQ = qFlattened - mean\n    # PCA untuk proyeksi dataset dan query\n    Z, Uk = pcaSVD(standardizedDataset, k)",
         "detail": "src.app.api.image-retrieval.imageSearching",
+        "documentation": {}
+    },
+    {
+        "label": "standardization",
+        "kind": 2,
+        "importPath": "src.app.api.image-retrieval.LoadAndSearch",
+        "description": "src.app.api.image-retrieval.LoadAndSearch",
+        "peekOfCode": "def standardization(flattenImageSet):\n    sigmaPixel = np.sum(flattenImageSet, axis=0) # array [jumlah pixel ke-j dari tiap image i]\n    N = flattenImageSet.shape[0]\n    M = flattenImageSet.shape[1]\n    # print(\"N\" + str(N))\n    # print(\"M\" + str(M))\n    mean = sigmaPixel/N\n    standardized = flattenImageSet - mean\n    return standardized, mean\ndef pcaSVD(standarSet, k = 100):",
+        "detail": "src.app.api.image-retrieval.LoadAndSearch",
+        "documentation": {}
+    },
+    {
+        "label": "pcaSVD",
+        "kind": 2,
+        "importPath": "src.app.api.image-retrieval.LoadAndSearch",
+        "description": "src.app.api.image-retrieval.LoadAndSearch",
+        "peekOfCode": "def pcaSVD(standarSet, k = 100):\n    C = (1 / standarSet.shape[0]) * standarSet.T @ standarSet #(1/N) X^T X\n    U, Ev, Ut = np.linalg.svd(C, full_matrices=False)\n    Uk = U[:,:k]\n    # print(str(standarSet.shape[0]), str(standarSet.shape[1]))\n    # print(str(U.shape[0]), str(U.shape[1]))\n    # print(str(Ut.shape[0]), str(Ut.shape[1]))\n    # print(str(Utk.shape[0]), str(Utk.shape[1]))\n    # print(str(C.shape[0]), str(C.shape[1]))\n    Z = standarSet @ Uk #k = 100",
+        "detail": "src.app.api.image-retrieval.LoadAndSearch",
+        "documentation": {}
+    },
+    {
+        "label": "similarity",
+        "kind": 2,
+        "importPath": "src.app.api.image-retrieval.LoadAndSearch",
+        "description": "src.app.api.image-retrieval.LoadAndSearch",
+        "peekOfCode": "def similarity(query_vector, dataset_vectors, max_results=60):\n    distances = np.linalg.norm(dataset_vectors - query_vector, axis=1)  # axis=1 untuk menghitung jarak per baris\n    sorted_indices = np.argsort(distances)  # Urutkan indeks berdasarkan jarak\n    sorted_distances = distances[sorted_indices]  # Jarak yang sudah diurutkan\n    closest_indices = sorted_indices[:max_results]\n    closest_distances = sorted_distances[:max_results]\n    # Gabungkan index dan distance menjadi list of tuples\n    list_tuples = [(idx, dist) for idx, dist in zip(sorted_indices, sorted_distances)]\n    return list_tuples\ndef searchImage(imagePath: str, folderPath: str, imgSize=(50, 50), k=100, maxResult=5):",
+        "detail": "src.app.api.image-retrieval.LoadAndSearch",
+        "documentation": {}
+    },
+    {
+        "label": "searchImage",
+        "kind": 2,
+        "importPath": "src.app.api.image-retrieval.LoadAndSearch",
+        "description": "src.app.api.image-retrieval.LoadAndSearch",
+        "peekOfCode": "def searchImage(imagePath: str, folderPath: str, imgSize=(50, 50), k=100, maxResult=5):\n    qImage = Image.open(imagePath).resize(imgSize)\n    qGray = grayscaleConvert(qImage)\n    qFlattened = flattenImage(qGray)\n    path_to_dataset = os.path.join(os.getcwd(), 'database', 'imgDataset.txt')\n    path_to_imgName = os.path.join(os.getcwd(), 'database', 'ImgName.txt')\n    #load data\n    dataset = np.loadtxt(path_to_dataset)\n    imagesNameSet = pd.read_csv(path_to_imgName, header=None).squeeze().values\n    standardizedDataset, mean = standardization(dataset)",
+        "detail": "src.app.api.image-retrieval.LoadAndSearch",
+        "documentation": {}
+    },
+    {
+        "label": "grayscaleConvert",
+        "kind": 2,
+        "importPath": "src.app.api.image-retrieval.processNewImage",
+        "description": "src.app.api.image-retrieval.processNewImage",
+        "peekOfCode": "def grayscaleConvert(image):\n    imgArray = np.asarray(image, dtype=np.float32)\n    redArr = imgArray[:,:,0]\n    greenArr = imgArray[:,:,1]\n    blueArr = imgArray[:,:,2]\n    grayscale = 0.2989*redArr + 0.5870*greenArr + 0.1140*blueArr\n    #print(grayscale)\n    return grayscale\ndef flattenImage(grayscale_image):\n    M, N = grayscale_image.shape                # M = baris, N = kolom",
+        "detail": "src.app.api.image-retrieval.processNewImage",
+        "documentation": {}
+    },
+    {
+        "label": "flattenImage",
+        "kind": 2,
+        "importPath": "src.app.api.image-retrieval.processNewImage",
+        "description": "src.app.api.image-retrieval.processNewImage",
+        "peekOfCode": "def flattenImage(grayscale_image):\n    M, N = grayscale_image.shape                # M = baris, N = kolom\n    flattened_vector = []\n    for i in range(M):\n        for j in range(N):\n            flattened_vector.append(grayscale_image[i][j])\n    return np.array(flattened_vector)\ndef processImageFolder(folderPath: str, imgSize=(50,50)):\n    flattenedImageDataset = []\n    imagesNameSet = []",
+        "detail": "src.app.api.image-retrieval.processNewImage",
+        "documentation": {}
+    },
+    {
+        "label": "processImageFolder",
+        "kind": 2,
+        "importPath": "src.app.api.image-retrieval.processNewImage",
+        "description": "src.app.api.image-retrieval.processNewImage",
+        "peekOfCode": "def processImageFolder(folderPath: str, imgSize=(50,50)):\n    flattenedImageDataset = []\n    imagesNameSet = []\n    for filename in os.listdir(folderPath):\n        if filename.endswith(('.png', '.jpg', '.jpeg')):\n            imgPath = os.path.join(folderPath, filename)\n            image = Image.open(imgPath).resize(imgSize)\n            grayscale = grayscaleConvert(image)\n            flattened = flattenImage(grayscale)\n            imagesNameSet.append(filename)",
+        "detail": "src.app.api.image-retrieval.processNewImage",
+        "documentation": {}
+    },
+    {
+        "label": "inputNewImage",
+        "kind": 2,
+        "importPath": "src.app.api.image-retrieval.processNewImage",
+        "description": "src.app.api.image-retrieval.processNewImage",
+        "peekOfCode": "def inputNewImage(folderPath:str, imgSize=(50,50)):\n    path_to_dataset = os.path.join(os.getcwd(), 'database', 'imgDataset.txt')\n    path_to_imgName = os.path.join(os.getcwd(), 'database', 'ImgName.txt')\n    dataset = np.loadtxt(path_to_dataset)\n    imagesNameSet = pd.read_csv(path_to_imgName, header=None).squeeze().values\n    for filename in os.listdir(folderPath):\n        if filename.endswith(('.png', '.jpg', '.jpeg')):\n            imgPath = os.path.join(folderPath, filename)\n            image = Image.open(imgPath).resize(imgSize)\n            grayscale = grayscaleConvert(image)",
+        "detail": "src.app.api.image-retrieval.processNewImage",
         "documentation": {}
     }
 ]
