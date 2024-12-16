@@ -56,6 +56,7 @@ export async function POST(request: NextRequest) {
         fs.writeFileSync(path.join(folderTempImage, path.basename(entryName)), zipEntry.getData());
       } else if (['.mid', '.wav'].includes(fileExtension)) {
         destinationFolder = audioDir;
+
       } else {
         // Abaikan file yang tidak termasuk dalam kategori
         return;
@@ -82,6 +83,21 @@ export async function POST(request: NextRequest) {
       }
     }
     await inputNewImage(folderTempImage);
+
+    async function inputNewAudio() {
+      try {
+        const scriptPath = `"${path.join(process.cwd(), 'src', 'app', 'api', 'audio-retrieval', 'audioDatabase.py')}"`;
+        const { stdout, stderr } = await execPromise(`python "${scriptPath}"`);
+        if (stderr) {
+          console.error('Error:', stderr);
+        }
+        console.log('Output:', stdout);
+      } catch (error) {
+        console.error('Execution error:', error);
+      }
+    }
+    await inputNewAudio();
+    
     fs.rmdirSync(folderTempImage, { recursive: true });
     return NextResponse.json({ 
       message: 'Upload dan ekstraksi berhasil'

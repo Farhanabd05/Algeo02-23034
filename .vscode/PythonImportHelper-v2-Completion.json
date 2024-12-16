@@ -25,45 +25,51 @@
         "documentation": {}
     },
     {
-        "label": "mido",
-        "kind": 6,
+        "label": "predict_and_save",
+        "importPath": "basic_pitch.inference",
+        "description": "basic_pitch.inference",
         "isExtraImport": true,
-        "importPath": "mido",
-        "description": "mido",
-        "detail": "mido",
+        "detail": "basic_pitch.inference",
         "documentation": {}
     },
     {
-        "label": "numpy",
-        "kind": 6,
+        "label": "predict_and_save",
+        "importPath": "basic_pitch.inference",
+        "description": "basic_pitch.inference",
         "isExtraImport": true,
-        "importPath": "numpy",
-        "description": "numpy",
-        "detail": "numpy",
+        "detail": "basic_pitch.inference",
         "documentation": {}
     },
     {
-        "label": "Image",
-        "importPath": "PIL",
-        "description": "PIL",
+        "label": "predict_and_save",
+        "importPath": "basic_pitch.inference",
+        "description": "basic_pitch.inference",
         "isExtraImport": true,
-        "detail": "PIL",
+        "detail": "basic_pitch.inference",
         "documentation": {}
     },
     {
-        "label": "Image",
-        "importPath": "PIL",
-        "description": "PIL",
+        "label": "ICASSP_2022_MODEL_PATH",
+        "importPath": "basic_pitch",
+        "description": "basic_pitch",
         "isExtraImport": true,
-        "detail": "PIL",
+        "detail": "basic_pitch",
         "documentation": {}
     },
     {
-        "label": "Image",
-        "importPath": "PIL",
-        "description": "PIL",
+        "label": "ICASSP_2022_MODEL_PATH",
+        "importPath": "basic_pitch",
+        "description": "basic_pitch",
         "isExtraImport": true,
-        "detail": "PIL",
+        "detail": "basic_pitch",
+        "documentation": {}
+    },
+    {
+        "label": "ICASSP_2022_MODEL_PATH",
+        "importPath": "basic_pitch",
+        "description": "basic_pitch",
+        "isExtraImport": true,
+        "detail": "basic_pitch",
         "documentation": {}
     },
     {
@@ -84,12 +90,113 @@
         "documentation": {}
     },
     {
+        "label": "shutil",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "shutil",
+        "description": "shutil",
+        "detail": "shutil",
+        "documentation": {}
+    },
+    {
+        "label": "process_audio",
+        "importPath": "audioSearching",
+        "description": "audioSearching",
+        "isExtraImport": true,
+        "detail": "audioSearching",
+        "documentation": {}
+    },
+    {
+        "label": "Features",
+        "importPath": "audioSearching",
+        "description": "audioSearching",
+        "isExtraImport": true,
+        "detail": "audioSearching",
+        "documentation": {}
+    },
+    {
+        "label": "Features",
+        "importPath": "audioSearching",
+        "description": "audioSearching",
+        "isExtraImport": true,
+        "detail": "audioSearching",
+        "documentation": {}
+    },
+    {
+        "label": "pickle",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pickle",
+        "description": "pickle",
+        "detail": "pickle",
+        "documentation": {}
+    },
+    {
+        "label": "codecs",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "codecs",
+        "description": "codecs",
+        "detail": "codecs",
+        "documentation": {}
+    },
+    {
         "label": "sys",
         "kind": 6,
         "isExtraImport": true,
         "importPath": "sys",
         "description": "sys",
         "detail": "sys",
+        "documentation": {}
+    },
+    {
+        "label": "mido",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "mido",
+        "description": "mido",
+        "detail": "mido",
+        "documentation": {}
+    },
+    {
+        "label": "numpy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "numpy",
+        "description": "numpy",
+        "detail": "numpy",
+        "documentation": {}
+    },
+    {
+        "label": "dataclass",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "Image",
+        "importPath": "PIL",
+        "description": "PIL",
+        "isExtraImport": true,
+        "detail": "PIL",
+        "documentation": {}
+    },
+    {
+        "label": "Image",
+        "importPath": "PIL",
+        "description": "PIL",
+        "isExtraImport": true,
+        "detail": "PIL",
+        "documentation": {}
+    },
+    {
+        "label": "Image",
+        "importPath": "PIL",
+        "description": "PIL",
+        "isExtraImport": true,
+        "detail": "PIL",
         "documentation": {}
     },
     {
@@ -298,11 +405,128 @@
         "documentation": {}
     },
     {
+        "label": "QUERY_PATH",
+        "kind": 5,
+        "importPath": "src.app.api.audio-retrieval.audioConvert",
+        "description": "src.app.api.audio-retrieval.audioConvert",
+        "peekOfCode": "QUERY_PATH = \"./public/query/audio/\"\n# Input and output paths\naudio_path = \"input.mp3\"\noutput_path = \"output.mid\"\n# Convert audio to MIDI\npredict_and_save(\n    audio_path_list=[QUERY_PATH+audio_path],\n    output_directory=QUERY_PATH,\n    save_midi=True,\n    sonify_midi=False,",
+        "detail": "src.app.api.audio-retrieval.audioConvert",
+        "documentation": {}
+    },
+    {
+        "label": "audio_path",
+        "kind": 5,
+        "importPath": "src.app.api.audio-retrieval.audioConvert",
+        "description": "src.app.api.audio-retrieval.audioConvert",
+        "peekOfCode": "audio_path = \"input.mp3\"\noutput_path = \"output.mid\"\n# Convert audio to MIDI\npredict_and_save(\n    audio_path_list=[QUERY_PATH+audio_path],\n    output_directory=QUERY_PATH,\n    save_midi=True,\n    sonify_midi=False,\n    save_model_outputs=False,\n    save_notes=False,",
+        "detail": "src.app.api.audio-retrieval.audioConvert",
+        "documentation": {}
+    },
+    {
+        "label": "output_path",
+        "kind": 5,
+        "importPath": "src.app.api.audio-retrieval.audioConvert",
+        "description": "src.app.api.audio-retrieval.audioConvert",
+        "peekOfCode": "output_path = \"output.mid\"\n# Convert audio to MIDI\npredict_and_save(\n    audio_path_list=[QUERY_PATH+audio_path],\n    output_directory=QUERY_PATH,\n    save_midi=True,\n    sonify_midi=False,\n    save_model_outputs=False,\n    save_notes=False,\n    model_or_model_path=ICASSP_2022_MODEL_PATH",
+        "detail": "src.app.api.audio-retrieval.audioConvert",
+        "documentation": {}
+    },
+    {
+        "label": "process_database",
+        "kind": 2,
+        "importPath": "src.app.api.audio-retrieval.audioDatabase",
+        "description": "src.app.api.audio-retrieval.audioDatabase",
+        "peekOfCode": "def process_database(database_path: str, temp_path: str = TEMP_PATH) -> list[tuple[str, Features]]:\n    if not os.path.exists(database_path):\n        return\n    database = []\n    files = [f for f in os.listdir(database_path) if os.path.isfile(os.path.join(database_path, f))]\n    if not os.path.exists(temp_path):\n        os.makedirs(temp_path)\n    nonmidi_files = []\n    for file_name in files:\n        source_file = os.path.join(database_path, file_name)",
+        "detail": "src.app.api.audio-retrieval.audioDatabase",
+        "documentation": {}
+    },
+    {
+        "label": "sys.stdout",
+        "kind": 5,
+        "importPath": "src.app.api.audio-retrieval.audioDatabase",
+        "description": "src.app.api.audio-retrieval.audioDatabase",
+        "peekOfCode": "sys.stdout = codecs.getwriter(\"utf-8\")(sys.stdout.buffer, 'strict')\nos.environ['PYTHONIOENCODING'] = 'utf-8'\nDATABASE_PATH = os.path.join(os.getcwd(), \"public\", \"uploads\", \"audio\") + \"/\"\nTEMP_PATH = os.path.join(os.getcwd(), \"public\", \"uploads\", \"audio-temp\") + \"/\"\nPKL_PATH = os.path.join(os.getcwd(), \"database\", \"audioDataset.pkl\")\ndef process_database(database_path: str, temp_path: str = TEMP_PATH) -> list[tuple[str, Features]]:\n    if not os.path.exists(database_path):\n        return\n    database = []\n    files = [f for f in os.listdir(database_path) if os.path.isfile(os.path.join(database_path, f))]",
+        "detail": "src.app.api.audio-retrieval.audioDatabase",
+        "documentation": {}
+    },
+    {
+        "label": "os.environ['PYTHONIOENCODING']",
+        "kind": 5,
+        "importPath": "src.app.api.audio-retrieval.audioDatabase",
+        "description": "src.app.api.audio-retrieval.audioDatabase",
+        "peekOfCode": "os.environ['PYTHONIOENCODING'] = 'utf-8'\nDATABASE_PATH = os.path.join(os.getcwd(), \"public\", \"uploads\", \"audio\") + \"/\"\nTEMP_PATH = os.path.join(os.getcwd(), \"public\", \"uploads\", \"audio-temp\") + \"/\"\nPKL_PATH = os.path.join(os.getcwd(), \"database\", \"audioDataset.pkl\")\ndef process_database(database_path: str, temp_path: str = TEMP_PATH) -> list[tuple[str, Features]]:\n    if not os.path.exists(database_path):\n        return\n    database = []\n    files = [f for f in os.listdir(database_path) if os.path.isfile(os.path.join(database_path, f))]\n    if not os.path.exists(temp_path):",
+        "detail": "src.app.api.audio-retrieval.audioDatabase",
+        "documentation": {}
+    },
+    {
+        "label": "DATABASE_PATH",
+        "kind": 5,
+        "importPath": "src.app.api.audio-retrieval.audioDatabase",
+        "description": "src.app.api.audio-retrieval.audioDatabase",
+        "peekOfCode": "DATABASE_PATH = os.path.join(os.getcwd(), \"public\", \"uploads\", \"audio\") + \"/\"\nTEMP_PATH = os.path.join(os.getcwd(), \"public\", \"uploads\", \"audio-temp\") + \"/\"\nPKL_PATH = os.path.join(os.getcwd(), \"database\", \"audioDataset.pkl\")\ndef process_database(database_path: str, temp_path: str = TEMP_PATH) -> list[tuple[str, Features]]:\n    if not os.path.exists(database_path):\n        return\n    database = []\n    files = [f for f in os.listdir(database_path) if os.path.isfile(os.path.join(database_path, f))]\n    if not os.path.exists(temp_path):\n        os.makedirs(temp_path)",
+        "detail": "src.app.api.audio-retrieval.audioDatabase",
+        "documentation": {}
+    },
+    {
+        "label": "TEMP_PATH",
+        "kind": 5,
+        "importPath": "src.app.api.audio-retrieval.audioDatabase",
+        "description": "src.app.api.audio-retrieval.audioDatabase",
+        "peekOfCode": "TEMP_PATH = os.path.join(os.getcwd(), \"public\", \"uploads\", \"audio-temp\") + \"/\"\nPKL_PATH = os.path.join(os.getcwd(), \"database\", \"audioDataset.pkl\")\ndef process_database(database_path: str, temp_path: str = TEMP_PATH) -> list[tuple[str, Features]]:\n    if not os.path.exists(database_path):\n        return\n    database = []\n    files = [f for f in os.listdir(database_path) if os.path.isfile(os.path.join(database_path, f))]\n    if not os.path.exists(temp_path):\n        os.makedirs(temp_path)\n    nonmidi_files = []",
+        "detail": "src.app.api.audio-retrieval.audioDatabase",
+        "documentation": {}
+    },
+    {
+        "label": "PKL_PATH",
+        "kind": 5,
+        "importPath": "src.app.api.audio-retrieval.audioDatabase",
+        "description": "src.app.api.audio-retrieval.audioDatabase",
+        "peekOfCode": "PKL_PATH = os.path.join(os.getcwd(), \"database\", \"audioDataset.pkl\")\ndef process_database(database_path: str, temp_path: str = TEMP_PATH) -> list[tuple[str, Features]]:\n    if not os.path.exists(database_path):\n        return\n    database = []\n    files = [f for f in os.listdir(database_path) if os.path.isfile(os.path.join(database_path, f))]\n    if not os.path.exists(temp_path):\n        os.makedirs(temp_path)\n    nonmidi_files = []\n    for file_name in files:",
+        "detail": "src.app.api.audio-retrieval.audioDatabase",
+        "documentation": {}
+    },
+    {
+        "label": "PKL_PATH",
+        "kind": 5,
+        "importPath": "src.app.api.audio-retrieval.audioPKL",
+        "description": "src.app.api.audio-retrieval.audioPKL",
+        "peekOfCode": "PKL_PATH = os.path.join(os.getcwd(), \"database\", \"audioDataset.pkl\")\nif __name__ == \"__main__\":\n    with open(PKL_PATH, \"rb\") as file:\n        database: list[tuple[str, Features]] = pickle.load(file)\n    for music in database:\n        print(music[0])",
+        "detail": "src.app.api.audio-retrieval.audioPKL",
+        "documentation": {}
+    },
+    {
+        "label": "display_midi_info",
+        "kind": 2,
+        "importPath": "src.app.api.audio-retrieval.audioRead",
+        "description": "src.app.api.audio-retrieval.audioRead",
+        "peekOfCode": "def display_midi_info(file_path):\n    try:\n        # Open the MIDI file\n        midi = mido.MidiFile(file_path)\n        # Display general file information\n        print(\"--- General MIDI File Info ---\")\n        print(f\"File Type: {midi.type}\")\n        print(f\"Number of Tracks: {len(midi.tracks)}\")\n        print(f\"Ticks per Beat: {midi.ticks_per_beat}\")\n        print()",
+        "detail": "src.app.api.audio-retrieval.audioRead",
+        "documentation": {}
+    },
+    {
+        "label": "file_path",
+        "kind": 5,
+        "importPath": "src.app.api.audio-retrieval.audioRead",
+        "description": "src.app.api.audio-retrieval.audioRead",
+        "peekOfCode": "file_path = input(\"Enter the path to the MIDI file: \")\ndisplay_midi_info(file_path)",
+        "detail": "src.app.api.audio-retrieval.audioRead",
+        "documentation": {}
+    },
+    {
+        "label": "Features",
+        "kind": 6,
+        "importPath": "src.app.api.audio-retrieval.audioSearching",
+        "description": "src.app.api.audio-retrieval.audioSearching",
+        "peekOfCode": "class Features:\n    ATB: list[int]\n    RTB: list[int]\n    FTB: list[int]\n    ATB_norm: float\n    RTB_norm: float\n    FTB_norm: float\ndef extract_features(current_segment: list[int]) -> Features:\n        features = Features([], [], [], 0, 0, 0)\n        # extract ATB feature",
+        "detail": "src.app.api.audio-retrieval.audioSearching",
+        "documentation": {}
+    },
+    {
         "label": "extract_features",
         "kind": 2,
         "importPath": "src.app.api.audio-retrieval.audioSearching",
         "description": "src.app.api.audio-retrieval.audioSearching",
-        "peekOfCode": "def extract_features(current_segment: list) -> list:\n        features = []\n        bins_128 = np.arange(0, 128 + 1)\n        ATB = np.histogram(current_segment, bins=bins_128)[0]\n        ATB = ATB / ATB.sum()\n        features.extend(ATB)\n        bins_255 = np.arange(-127, 128 + 1)\n        RTB_current_segment = []\n        for i in range(len(current_segment) - 1):\n            RTB_current_segment.append(current_segment[i + 1] - current_segment[i])",
+        "peekOfCode": "def extract_features(current_segment: list[int]) -> Features:\n        features = Features([], [], [], 0, 0, 0)\n        # extract ATB feature\n        bins_128 = np.arange(0, 128 + 1)\n        ATB = np.histogram(current_segment, bins=bins_128)[0]\n        features.ATB = ATB / ATB.sum()\n        # extract RTB feature\n        bins_255 = np.arange(-127, 128 + 1)\n        RTB_current_segment = []\n        for i in range(len(current_segment) - 1):",
         "detail": "src.app.api.audio-retrieval.audioSearching",
         "documentation": {}
     },
@@ -311,7 +535,7 @@
         "kind": 2,
         "importPath": "src.app.api.audio-retrieval.audioSearching",
         "description": "src.app.api.audio-retrieval.audioSearching",
-        "peekOfCode": "def process_audio(path: str):\n    midi_file = mido.MidiFile(path)\n    ticks_per_beat = midi_file.ticks_per_beat\n    current_segment_length = SEGMENT * ticks_per_beat\n    slide_length = SLIDE * ticks_per_beat\n    music_features = []\n    for track_index, track in enumerate(midi_file.tracks):\n        track_ticks = 0\n        cumulative_ticks = []\n        for msg in track:",
+        "peekOfCode": "def process_audio(path: str) -> list[Features]:\n    midi_file = mido.MidiFile(path)\n    ticks_per_beat = midi_file.ticks_per_beat\n    current_segment_length = SEGMENT * ticks_per_beat\n    slide_length = SLIDE * ticks_per_beat\n    music_features = []\n    for track_index, track in enumerate(midi_file.tracks):\n        track_ticks = 0\n        cumulative_ticks = []\n        for msg in track:",
         "detail": "src.app.api.audio-retrieval.audioSearching",
         "documentation": {}
     },
@@ -320,7 +544,7 @@
         "kind": 2,
         "importPath": "src.app.api.audio-retrieval.audioSearching",
         "description": "src.app.api.audio-retrieval.audioSearching",
-        "peekOfCode": "def minmax_normalize(array: list) -> list:\n    return (array - np.min(array)) / (np.max(array) - np.min(array))\ndef standard_normalize(array: list) -> list:\n    return (array - np.mean(array)) / np.std(array)\ndef cosine_similarity(v1: np.ndarray, v2: np.ndarray) -> float:\n    return np.dot(v1, v2) / (np.linalg.norm(v1) * np.linalg.norm(v2))\ndef compare_features(features1: list, features2: list, atb_weight: int = ATB_WEIGHT, rtb_weight: int = RTB_WEIGHT, ftb_weight: int = FTB_WEIGHT) -> float:\n    return cosine_similarity(features1[0:128], features2[0:128]) * atb_weight + cosine_similarity(features1[128:383], features2[128:383]) * rtb_weight + cosine_similarity(features1[383:638], features2[383:638]) * ftb_weight\ndef compare_music(music1: list, music2: list) -> float:\n    max = 0",
+        "peekOfCode": "def minmax_normalize(array: list[int]) -> list:\n    return (array - np.min(array)) / (np.max(array) - np.min(array))\ndef standard_normalize(array: list[int]) -> list:\n    return (array - np.mean(array)) / np.std(array)\ndef cosine_similarity(v1: list[int], v2: list[int], norm1: int, norm2: int) -> float:\n    return np.dot(v1, v2) / (norm1 * norm2)\ndef compare_features(features1: Features, features2: Features, atb_weight: int = ATB_WEIGHT, rtb_weight: int = RTB_WEIGHT, ftb_weight: int = FTB_WEIGHT) -> float:\n    return cosine_similarity(features1.ATB, features2.ATB, features1.ATB_norm, features2.ATB_norm) * atb_weight + cosine_similarity(features1.RTB, features2.RTB, features1.RTB_norm, features2.RTB_norm) * rtb_weight + cosine_similarity(features1.FTB, features2.FTB, features1.FTB_norm, features2.FTB_norm) * ftb_weight\ndef compare_music(music1: list[Features], music2: list[Features]) -> float:\n    max = 0",
         "detail": "src.app.api.audio-retrieval.audioSearching",
         "documentation": {}
     },
@@ -329,7 +553,7 @@
         "kind": 2,
         "importPath": "src.app.api.audio-retrieval.audioSearching",
         "description": "src.app.api.audio-retrieval.audioSearching",
-        "peekOfCode": "def standard_normalize(array: list) -> list:\n    return (array - np.mean(array)) / np.std(array)\ndef cosine_similarity(v1: np.ndarray, v2: np.ndarray) -> float:\n    return np.dot(v1, v2) / (np.linalg.norm(v1) * np.linalg.norm(v2))\ndef compare_features(features1: list, features2: list, atb_weight: int = ATB_WEIGHT, rtb_weight: int = RTB_WEIGHT, ftb_weight: int = FTB_WEIGHT) -> float:\n    return cosine_similarity(features1[0:128], features2[0:128]) * atb_weight + cosine_similarity(features1[128:383], features2[128:383]) * rtb_weight + cosine_similarity(features1[383:638], features2[383:638]) * ftb_weight\ndef compare_music(music1: list, music2: list) -> float:\n    max = 0\n    for feature1 in music1:\n        for feature2 in music2:",
+        "peekOfCode": "def standard_normalize(array: list[int]) -> list:\n    return (array - np.mean(array)) / np.std(array)\ndef cosine_similarity(v1: list[int], v2: list[int], norm1: int, norm2: int) -> float:\n    return np.dot(v1, v2) / (norm1 * norm2)\ndef compare_features(features1: Features, features2: Features, atb_weight: int = ATB_WEIGHT, rtb_weight: int = RTB_WEIGHT, ftb_weight: int = FTB_WEIGHT) -> float:\n    return cosine_similarity(features1.ATB, features2.ATB, features1.ATB_norm, features2.ATB_norm) * atb_weight + cosine_similarity(features1.RTB, features2.RTB, features1.RTB_norm, features2.RTB_norm) * rtb_weight + cosine_similarity(features1.FTB, features2.FTB, features1.FTB_norm, features2.FTB_norm) * ftb_weight\ndef compare_music(music1: list[Features], music2: list[Features]) -> float:\n    max = 0\n    for feature1 in music1:\n        for feature2 in music2:",
         "detail": "src.app.api.audio-retrieval.audioSearching",
         "documentation": {}
     },
@@ -338,7 +562,7 @@
         "kind": 2,
         "importPath": "src.app.api.audio-retrieval.audioSearching",
         "description": "src.app.api.audio-retrieval.audioSearching",
-        "peekOfCode": "def cosine_similarity(v1: np.ndarray, v2: np.ndarray) -> float:\n    return np.dot(v1, v2) / (np.linalg.norm(v1) * np.linalg.norm(v2))\ndef compare_features(features1: list, features2: list, atb_weight: int = ATB_WEIGHT, rtb_weight: int = RTB_WEIGHT, ftb_weight: int = FTB_WEIGHT) -> float:\n    return cosine_similarity(features1[0:128], features2[0:128]) * atb_weight + cosine_similarity(features1[128:383], features2[128:383]) * rtb_weight + cosine_similarity(features1[383:638], features2[383:638]) * ftb_weight\ndef compare_music(music1: list, music2: list) -> float:\n    max = 0\n    for feature1 in music1:\n        for feature2 in music2:\n            score = compare_features(feature1, feature2)\n            if score > max:",
+        "peekOfCode": "def cosine_similarity(v1: list[int], v2: list[int], norm1: int, norm2: int) -> float:\n    return np.dot(v1, v2) / (norm1 * norm2)\ndef compare_features(features1: Features, features2: Features, atb_weight: int = ATB_WEIGHT, rtb_weight: int = RTB_WEIGHT, ftb_weight: int = FTB_WEIGHT) -> float:\n    return cosine_similarity(features1.ATB, features2.ATB, features1.ATB_norm, features2.ATB_norm) * atb_weight + cosine_similarity(features1.RTB, features2.RTB, features1.RTB_norm, features2.RTB_norm) * rtb_weight + cosine_similarity(features1.FTB, features2.FTB, features1.FTB_norm, features2.FTB_norm) * ftb_weight\ndef compare_music(music1: list[Features], music2: list[Features]) -> float:\n    max = 0\n    for feature1 in music1:\n        for feature2 in music2:\n            score = compare_features(feature1, feature2)\n            if score > max:",
         "detail": "src.app.api.audio-retrieval.audioSearching",
         "documentation": {}
     },
@@ -347,7 +571,7 @@
         "kind": 2,
         "importPath": "src.app.api.audio-retrieval.audioSearching",
         "description": "src.app.api.audio-retrieval.audioSearching",
-        "peekOfCode": "def compare_features(features1: list, features2: list, atb_weight: int = ATB_WEIGHT, rtb_weight: int = RTB_WEIGHT, ftb_weight: int = FTB_WEIGHT) -> float:\n    return cosine_similarity(features1[0:128], features2[0:128]) * atb_weight + cosine_similarity(features1[128:383], features2[128:383]) * rtb_weight + cosine_similarity(features1[383:638], features2[383:638]) * ftb_weight\ndef compare_music(music1: list, music2: list) -> float:\n    max = 0\n    for feature1 in music1:\n        for feature2 in music2:\n            score = compare_features(feature1, feature2)\n            if score > max:\n                max = float(score)\n    return max",
+        "peekOfCode": "def compare_features(features1: Features, features2: Features, atb_weight: int = ATB_WEIGHT, rtb_weight: int = RTB_WEIGHT, ftb_weight: int = FTB_WEIGHT) -> float:\n    return cosine_similarity(features1.ATB, features2.ATB, features1.ATB_norm, features2.ATB_norm) * atb_weight + cosine_similarity(features1.RTB, features2.RTB, features1.RTB_norm, features2.RTB_norm) * rtb_weight + cosine_similarity(features1.FTB, features2.FTB, features1.FTB_norm, features2.FTB_norm) * ftb_weight\ndef compare_music(music1: list[Features], music2: list[Features]) -> float:\n    max = 0\n    for feature1 in music1:\n        for feature2 in music2:\n            score = compare_features(feature1, feature2)\n            if score > max:\n                max = float(score)\n    return max",
         "detail": "src.app.api.audio-retrieval.audioSearching",
         "documentation": {}
     },
@@ -356,7 +580,7 @@
         "kind": 2,
         "importPath": "src.app.api.audio-retrieval.audioSearching",
         "description": "src.app.api.audio-retrieval.audioSearching",
-        "peekOfCode": "def compare_music(music1: list, music2: list) -> float:\n    max = 0\n    for feature1 in music1:\n        for feature2 in music2:\n            score = compare_features(feature1, feature2)\n            if score > max:\n                max = float(score)\n    return max\ndef find_best_match(music: list, database_features: list, database_path: list) -> list[tuple[str, float]]:\n    best_scores = []",
+        "peekOfCode": "def compare_music(music1: list[Features], music2: list[Features]) -> float:\n    max = 0\n    for feature1 in music1:\n        for feature2 in music2:\n            score = compare_features(feature1, feature2)\n            if score > max:\n                max = float(score)\n    return max\ndef find_best_match(music: list[Features], db: list[tuple[list[Features], list[str]]]) -> list[tuple[str, float]]:\n    best_scores = []",
         "detail": "src.app.api.audio-retrieval.audioSearching",
         "documentation": {}
     },
@@ -365,7 +589,52 @@
         "kind": 2,
         "importPath": "src.app.api.audio-retrieval.audioSearching",
         "description": "src.app.api.audio-retrieval.audioSearching",
-        "peekOfCode": "def find_best_match(music: list, database_features: list, database_path: list) -> list[tuple[str, float]]:\n    best_scores = []\n    length = len(database_features)\n    for i in range(length):\n        score = compare_music(music, database_features[i])\n        best_scores.append((database_path[i], score))\n    best_scores.sort(key=lambda x: x[1], reverse=True)\n    return best_scores\n# Testing\nAUDIO_PATH = \"./public/uploads/audio/\"",
+        "peekOfCode": "def find_best_match(music: list[Features], db: list[tuple[list[Features], list[str]]]) -> list[tuple[str, float]]:\n    best_scores = []\n    for file_name, features in db:\n        score = compare_music(music, features)\n        best_scores.append((file_name, score))\n    best_scores.sort(key=lambda x: x[1], reverse=True)\n    return best_scores\ndef search_music(music_path: str, max_result: int) -> list[tuple[str, float]]:\n    if os.path.splitext(music_path)[1] != \".mid\":\n        music_path = os.path.splitext(music_path)[0] + \"_basic_pitch.mid\"",
+        "detail": "src.app.api.audio-retrieval.audioSearching",
+        "documentation": {}
+    },
+    {
+        "label": "search_music",
+        "kind": 2,
+        "importPath": "src.app.api.audio-retrieval.audioSearching",
+        "description": "src.app.api.audio-retrieval.audioSearching",
+        "peekOfCode": "def search_music(music_path: str, max_result: int) -> list[tuple[str, float]]:\n    if os.path.splitext(music_path)[1] != \".mid\":\n        music_path = os.path.splitext(music_path)[0] + \"_basic_pitch.mid\"\n    music = process_audio(music_path)\n    return find_best_match(music, database)[:max_result]\ndef print_results(results: list[tuple[str, float]]):\n    json_results = [\n        {\n            'filename': result[0],\n            'score': result[1] * 100",
+        "detail": "src.app.api.audio-retrieval.audioSearching",
+        "documentation": {}
+    },
+    {
+        "label": "print_results",
+        "kind": 2,
+        "importPath": "src.app.api.audio-retrieval.audioSearching",
+        "description": "src.app.api.audio-retrieval.audioSearching",
+        "peekOfCode": "def print_results(results: list[tuple[str, float]]):\n    json_results = [\n        {\n            'filename': result[0],\n            'score': result[1] * 100\n        }\n        for result in results\n    ]\n    print(json.dumps(json_results))\nif __name__ == \"__main__\":",
+        "detail": "src.app.api.audio-retrieval.audioSearching",
+        "documentation": {}
+    },
+    {
+        "label": "DATABASE_PATH",
+        "kind": 5,
+        "importPath": "src.app.api.audio-retrieval.audioSearching",
+        "description": "src.app.api.audio-retrieval.audioSearching",
+        "peekOfCode": "DATABASE_PATH = os.path.join(os.getcwd(), \"public\", \"uploads\", \"audio\")\nQUERY_PATH = os.path.join(os.getcwd(), \"public\", \"query\", \"audio\")\nPKL_PATH = os.path.join(os.getcwd(), \"database\", \"audioDataset.pkl\")\nSEGMENT = 20\nSLIDE = 2\nATB_WEIGHT = 0.33\nRTB_WEIGHT = 0.33\nFTB_WEIGHT = 0.33\ndatabase = []\n@dataclass",
+        "detail": "src.app.api.audio-retrieval.audioSearching",
+        "documentation": {}
+    },
+    {
+        "label": "QUERY_PATH",
+        "kind": 5,
+        "importPath": "src.app.api.audio-retrieval.audioSearching",
+        "description": "src.app.api.audio-retrieval.audioSearching",
+        "peekOfCode": "QUERY_PATH = os.path.join(os.getcwd(), \"public\", \"query\", \"audio\")\nPKL_PATH = os.path.join(os.getcwd(), \"database\", \"audioDataset.pkl\")\nSEGMENT = 20\nSLIDE = 2\nATB_WEIGHT = 0.33\nRTB_WEIGHT = 0.33\nFTB_WEIGHT = 0.33\ndatabase = []\n@dataclass\nclass Features:",
+        "detail": "src.app.api.audio-retrieval.audioSearching",
+        "documentation": {}
+    },
+    {
+        "label": "PKL_PATH",
+        "kind": 5,
+        "importPath": "src.app.api.audio-retrieval.audioSearching",
+        "description": "src.app.api.audio-retrieval.audioSearching",
+        "peekOfCode": "PKL_PATH = os.path.join(os.getcwd(), \"database\", \"audioDataset.pkl\")\nSEGMENT = 20\nSLIDE = 2\nATB_WEIGHT = 0.33\nRTB_WEIGHT = 0.33\nFTB_WEIGHT = 0.33\ndatabase = []\n@dataclass\nclass Features:\n    ATB: list[int]",
         "detail": "src.app.api.audio-retrieval.audioSearching",
         "documentation": {}
     },
@@ -374,7 +643,7 @@
         "kind": 5,
         "importPath": "src.app.api.audio-retrieval.audioSearching",
         "description": "src.app.api.audio-retrieval.audioSearching",
-        "peekOfCode": "SEGMENT = 20\nSLIDE = 4\nATB_WEIGHT = 0.5\nRTB_WEIGHT = 0.3\nFTB_WEIGHT = 0.2\ndef extract_features(current_segment: list) -> list:\n        features = []\n        bins_128 = np.arange(0, 128 + 1)\n        ATB = np.histogram(current_segment, bins=bins_128)[0]\n        ATB = ATB / ATB.sum()",
+        "peekOfCode": "SEGMENT = 20\nSLIDE = 2\nATB_WEIGHT = 0.33\nRTB_WEIGHT = 0.33\nFTB_WEIGHT = 0.33\ndatabase = []\n@dataclass\nclass Features:\n    ATB: list[int]\n    RTB: list[int]",
         "detail": "src.app.api.audio-retrieval.audioSearching",
         "documentation": {}
     },
@@ -383,7 +652,7 @@
         "kind": 5,
         "importPath": "src.app.api.audio-retrieval.audioSearching",
         "description": "src.app.api.audio-retrieval.audioSearching",
-        "peekOfCode": "SLIDE = 4\nATB_WEIGHT = 0.5\nRTB_WEIGHT = 0.3\nFTB_WEIGHT = 0.2\ndef extract_features(current_segment: list) -> list:\n        features = []\n        bins_128 = np.arange(0, 128 + 1)\n        ATB = np.histogram(current_segment, bins=bins_128)[0]\n        ATB = ATB / ATB.sum()\n        features.extend(ATB)",
+        "peekOfCode": "SLIDE = 2\nATB_WEIGHT = 0.33\nRTB_WEIGHT = 0.33\nFTB_WEIGHT = 0.33\ndatabase = []\n@dataclass\nclass Features:\n    ATB: list[int]\n    RTB: list[int]\n    FTB: list[int]",
         "detail": "src.app.api.audio-retrieval.audioSearching",
         "documentation": {}
     },
@@ -392,7 +661,7 @@
         "kind": 5,
         "importPath": "src.app.api.audio-retrieval.audioSearching",
         "description": "src.app.api.audio-retrieval.audioSearching",
-        "peekOfCode": "ATB_WEIGHT = 0.5\nRTB_WEIGHT = 0.3\nFTB_WEIGHT = 0.2\ndef extract_features(current_segment: list) -> list:\n        features = []\n        bins_128 = np.arange(0, 128 + 1)\n        ATB = np.histogram(current_segment, bins=bins_128)[0]\n        ATB = ATB / ATB.sum()\n        features.extend(ATB)\n        bins_255 = np.arange(-127, 128 + 1)",
+        "peekOfCode": "ATB_WEIGHT = 0.33\nRTB_WEIGHT = 0.33\nFTB_WEIGHT = 0.33\ndatabase = []\n@dataclass\nclass Features:\n    ATB: list[int]\n    RTB: list[int]\n    FTB: list[int]\n    ATB_norm: float",
         "detail": "src.app.api.audio-retrieval.audioSearching",
         "documentation": {}
     },
@@ -401,7 +670,7 @@
         "kind": 5,
         "importPath": "src.app.api.audio-retrieval.audioSearching",
         "description": "src.app.api.audio-retrieval.audioSearching",
-        "peekOfCode": "RTB_WEIGHT = 0.3\nFTB_WEIGHT = 0.2\ndef extract_features(current_segment: list) -> list:\n        features = []\n        bins_128 = np.arange(0, 128 + 1)\n        ATB = np.histogram(current_segment, bins=bins_128)[0]\n        ATB = ATB / ATB.sum()\n        features.extend(ATB)\n        bins_255 = np.arange(-127, 128 + 1)\n        RTB_current_segment = []",
+        "peekOfCode": "RTB_WEIGHT = 0.33\nFTB_WEIGHT = 0.33\ndatabase = []\n@dataclass\nclass Features:\n    ATB: list[int]\n    RTB: list[int]\n    FTB: list[int]\n    ATB_norm: float\n    RTB_norm: float",
         "detail": "src.app.api.audio-retrieval.audioSearching",
         "documentation": {}
     },
@@ -410,52 +679,16 @@
         "kind": 5,
         "importPath": "src.app.api.audio-retrieval.audioSearching",
         "description": "src.app.api.audio-retrieval.audioSearching",
-        "peekOfCode": "FTB_WEIGHT = 0.2\ndef extract_features(current_segment: list) -> list:\n        features = []\n        bins_128 = np.arange(0, 128 + 1)\n        ATB = np.histogram(current_segment, bins=bins_128)[0]\n        ATB = ATB / ATB.sum()\n        features.extend(ATB)\n        bins_255 = np.arange(-127, 128 + 1)\n        RTB_current_segment = []\n        for i in range(len(current_segment) - 1):",
+        "peekOfCode": "FTB_WEIGHT = 0.33\ndatabase = []\n@dataclass\nclass Features:\n    ATB: list[int]\n    RTB: list[int]\n    FTB: list[int]\n    ATB_norm: float\n    RTB_norm: float\n    FTB_norm: float",
         "detail": "src.app.api.audio-retrieval.audioSearching",
         "documentation": {}
     },
     {
-        "label": "AUDIO_PATH",
+        "label": "database",
         "kind": 5,
         "importPath": "src.app.api.audio-retrieval.audioSearching",
         "description": "src.app.api.audio-retrieval.audioSearching",
-        "peekOfCode": "AUDIO_PATH = \"./public/uploads/audio/\"\ndatabase_features = []\ndatabase_path = []\ntarget_features = process_audio(AUDIO_PATH + \"peak3.mid\")\nfor i in range(1, 51):\n    print(f\"{i*2}%\")\n    database_features.append(process_audio(AUDIO_PATH + f\"x ({i}).mid\"))\n    database_path.append(f\"x ({i}).mid\")\nresult = find_best_match(target_features, database_features, database_path)\nprint(result)",
-        "detail": "src.app.api.audio-retrieval.audioSearching",
-        "documentation": {}
-    },
-    {
-        "label": "database_features",
-        "kind": 5,
-        "importPath": "src.app.api.audio-retrieval.audioSearching",
-        "description": "src.app.api.audio-retrieval.audioSearching",
-        "peekOfCode": "database_features = []\ndatabase_path = []\ntarget_features = process_audio(AUDIO_PATH + \"peak3.mid\")\nfor i in range(1, 51):\n    print(f\"{i*2}%\")\n    database_features.append(process_audio(AUDIO_PATH + f\"x ({i}).mid\"))\n    database_path.append(f\"x ({i}).mid\")\nresult = find_best_match(target_features, database_features, database_path)\nprint(result)",
-        "detail": "src.app.api.audio-retrieval.audioSearching",
-        "documentation": {}
-    },
-    {
-        "label": "database_path",
-        "kind": 5,
-        "importPath": "src.app.api.audio-retrieval.audioSearching",
-        "description": "src.app.api.audio-retrieval.audioSearching",
-        "peekOfCode": "database_path = []\ntarget_features = process_audio(AUDIO_PATH + \"peak3.mid\")\nfor i in range(1, 51):\n    print(f\"{i*2}%\")\n    database_features.append(process_audio(AUDIO_PATH + f\"x ({i}).mid\"))\n    database_path.append(f\"x ({i}).mid\")\nresult = find_best_match(target_features, database_features, database_path)\nprint(result)",
-        "detail": "src.app.api.audio-retrieval.audioSearching",
-        "documentation": {}
-    },
-    {
-        "label": "target_features",
-        "kind": 5,
-        "importPath": "src.app.api.audio-retrieval.audioSearching",
-        "description": "src.app.api.audio-retrieval.audioSearching",
-        "peekOfCode": "target_features = process_audio(AUDIO_PATH + \"peak3.mid\")\nfor i in range(1, 51):\n    print(f\"{i*2}%\")\n    database_features.append(process_audio(AUDIO_PATH + f\"x ({i}).mid\"))\n    database_path.append(f\"x ({i}).mid\")\nresult = find_best_match(target_features, database_features, database_path)\nprint(result)",
-        "detail": "src.app.api.audio-retrieval.audioSearching",
-        "documentation": {}
-    },
-    {
-        "label": "result",
-        "kind": 5,
-        "importPath": "src.app.api.audio-retrieval.audioSearching",
-        "description": "src.app.api.audio-retrieval.audioSearching",
-        "peekOfCode": "result = find_best_match(target_features, database_features, database_path)\nprint(result)",
+        "peekOfCode": "database = []\n@dataclass\nclass Features:\n    ATB: list[int]\n    RTB: list[int]\n    FTB: list[int]\n    ATB_norm: float\n    RTB_norm: float\n    FTB_norm: float\ndef extract_features(current_segment: list[int]) -> Features:",
         "detail": "src.app.api.audio-retrieval.audioSearching",
         "documentation": {}
     },
