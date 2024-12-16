@@ -42,7 +42,7 @@ Before running the application, ensure you have the following installed:
 ## Installation
 1. **Clone the Repository**
    ```bash
-   git clone <repository_url>
+   git clone https://github.com/Farhanabd05/Algeo02-23034.git
    ```
 
 2. **Navigate to the Project Directory**
