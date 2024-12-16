@@ -6,10 +6,15 @@ import argparse
 from os import path
 def grayscaleConvert(image):
     imgArray = np.asarray(image, dtype=np.float32)
-    redArr = imgArray[:,:,0]
-    greenArr = imgArray[:,:,1]
-    blueArr = imgArray[:,:,2]
-    grayscale = 0.2989*redArr + 0.5870*greenArr + 0.1140*blueArr
+    if len(imgArray.shape) == 3:  # RGB image (3D array)
+        redArr = imgArray[:, :, 0]
+        greenArr = imgArray[:, :, 1]
+        blueArr = imgArray[:, :, 2]
+        grayscale = 0.2989 * redArr + 0.5870 * greenArr + 0.1140 * blueArr  # Weighted grayscale conversion
+    elif len(imgArray.shape) == 2:  # Grayscale image (2D array)
+        grayscale = imgArray  # No need for conversion
+    else:
+        raise ValueError("Unsupported image format!")
     #print(grayscale)
     return grayscale
 
