@@ -2,7 +2,9 @@ from basic_pitch.inference import predict_and_save
 from basic_pitch import ICASSP_2022_MODEL_PATH
 import os
 import sys
-
+import codecs
+# Mengatur encoding terminal menjadi UTF-8
+sys.stdout = codecs.getwriter("utf-8")(sys.stdout.buffer, 'strict')
 
 
 if __name__ == "__main__":

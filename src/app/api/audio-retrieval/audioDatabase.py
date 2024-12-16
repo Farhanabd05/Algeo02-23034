@@ -4,7 +4,11 @@ from basic_pitch.inference import predict_and_save
 from basic_pitch import ICASSP_2022_MODEL_PATH
 from audioSearching import process_audio, Features
 import pickle
-
+import codecs
+import sys
+# Mengatur encoding terminal menjadi UTF-8
+sys.stdout = codecs.getwriter("utf-8")(sys.stdout.buffer, 'strict')
+os.environ['PYTHONIOENCODING'] = 'utf-8'
 DATABASE_PATH = os.path.join(os.getcwd(), "public", "uploads", "audio") + "/"
 TEMP_PATH = os.path.join(os.getcwd(), "public", "uploads", "audio-temp") + "/"
 PKL_PATH = os.path.join(os.getcwd(), "database", "audioDataset.pkl")
@@ -49,7 +53,7 @@ def process_database(database_path: str, temp_path: str = TEMP_PATH) -> list[tup
     )
 
     for file_name in nonmidi_files:
-        database.append((file_name, process_audio(temp_path + os.path.splitext(os.path.basename(file_name))[0] + "_basic_pitch.mid")))
+        database.append((os.path.basename(file_name), process_audio(temp_path + os.path.splitext(os.path.basename(file_name))[0] + "_basic_pitch.mid")))
 
     shutil.rmtree(temp_path)
 

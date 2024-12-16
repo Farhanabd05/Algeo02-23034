@@ -108,7 +108,7 @@ def process_audio(path: str) -> list[Features]:
             current_segment = current_segment[counter:]
 
             # Skipping if the segment is too short
-            if len(current_segment) <= 4 or len(set(current_segment)) <= 8:
+            if len(current_segment) <= 4 or len(set(current_segment)) <= 4:
                 start_window += slide_length
                 continue
             

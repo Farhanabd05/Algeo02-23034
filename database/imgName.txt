@@ -1,4 +1,3 @@
-pic_7.jpg
 Aoi.jpg
 pic_1.png
 pic_2.png
@@ -6,15 +5,7 @@ pic_3.png
 pic_4.png
 pic_5.png
 pic_6.png
-placeholder.jpg
-Screenshot 2024-07-19 162159.png
-114257928_p0_master1200.jpg
-pic_1.png
-pic_2.png
-pic_3.png
-pic_4.png
-pic_5.png
-pic_6.png
+pic_7.jpg
 placeholder.jpg
 Screenshot 2024-07-19 162159.png
 test.jpg

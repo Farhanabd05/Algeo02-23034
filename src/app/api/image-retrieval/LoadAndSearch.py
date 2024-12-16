@@ -35,8 +35,11 @@ def similarity(query_vector, dataset_vectors, max_results=60):
     closest_indices = sorted_indices[:max_results]
     closest_distances = sorted_distances[:max_results]
     
+    max_distance = 50 * 50 * 5/100
+    percentages = 100 - sorted_distances / max_distance
+    
     # Gabungkan index dan distance menjadi list of tuples
-    list_tuples = [(idx, dist) for idx, dist in zip(sorted_indices, sorted_distances)]
+    list_tuples = [(idx, dist) for idx, dist in zip(sorted_indices, percentages)]
     
     return list_tuples
 

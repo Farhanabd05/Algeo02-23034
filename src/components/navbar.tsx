@@ -8,12 +8,7 @@ export default function Navbar() {
         <NavigationMenuList>
           <NavigationMenuItem>
             <NavigationMenuLink asChild>
-                <Link className="text-l font-bold bg-gray-500 hover:bg-white hover:text-gray-900 text-white py-2 px-4 rounded" href="/">Home</Link>
-            </NavigationMenuLink>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <NavigationMenuLink asChild>
-                <Link className="text-l font-bold bg-gray-500 hover:bg-white hover:text-gray-900 text-white py-2 px-4 rounded" href="/upload">Upload</Link>
+                <Link className="text-l font-bold bg-gray-500 hover:bg-white hover:text-gray-900 text-white py-2 px-4 rounded" href="/">Upload</Link>
             </NavigationMenuLink>
           </NavigationMenuItem>
           <NavigationMenuItem>

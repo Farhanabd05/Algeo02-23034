@@ -21,24 +21,37 @@ export async function POST(request: NextRequest) {
         console.log('audio received:', audio.name);
 
         // Simpan gambar sementara
-        const uploadDir = path.join(process.cwd(), 'public', 'uploads', 'temp');
-        if (!fs.existsSync(uploadDir)) {
+        const uploadDir = path.join(process.cwd(), 'public', 'query','audio');
+        if (fs.existsSync(uploadDir)) {
+            fs.rmSync(uploadDir, { recursive: true, force: true });
+            fs.mkdirSync(uploadDir, { recursive: true });
+        } else {
             fs.mkdirSync(uploadDir, { recursive: true });
         }
+        // coba hapus semua file di dalam uploadDir jika ada
+
         // rename audio name to query.mid
-        const audioPath = path.join(uploadDir, 'query.mid');
+        const audioPath = path.join(uploadDir, audio.name);
         const audioBuffer = await audio.arrayBuffer();
         fs.writeFileSync(audioPath, Buffer.from(audioBuffer));
 
         console.log('audio saved temporarily at:', audioPath);
 
         // Direktori gambar untuk pencarian
-        const audioDirectory = path.join(process.cwd(), 'public', 'uploads', 'audio');
+        // const audioDirectory = path.join(process.cwd(), 'public', 'uploads', 'audio');
+    
+        const pythonScriptPathForAnotherMid = path.join(process.cwd(), 'src', 'app', 'api', 'audio-retrieval', 'audioInitial.py');
+        const commandForAnotherMid = `python "${pythonScriptPathForAnotherMid}" "${audioPath}"`;
+        const { stdout: anotherMid, stderr: anotherMidError } = await execPromise(commandForAnotherMid);
+        console.log('anotherMid:', anotherMid);
+        console.log('anotherMidError:', anotherMidError);
+        console.log('audioPath:', audioPath);
 
+        //hasil 
         // Jalankan skrip Python untuk pencarian gambar
         const pythonScriptPath = path.join(process.cwd(), 'src', 'app', 'api', 'audio-retrieval', 'audioSearching.py');
-        const command = `python "${pythonScriptPath}" "${audioPath}" "${audioDirectory}"`;
-
+        const command = `python "${pythonScriptPath}" "${audioPath}"`;
+        
         console.log('Executing Python script with command:', command);
 
         const { stdout, stderr } = await execPromise(command);
