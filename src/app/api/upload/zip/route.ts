@@ -3,6 +3,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import path from 'path';
 import fs from 'fs';
 import AdmZip from 'adm-zip';
+import { exec } from 'child_process';
+import util from 'util';
 
 export async function POST(request: NextRequest) {
   try {
@@ -24,23 +26,25 @@ export async function POST(request: NextRequest) {
     const buffer = Buffer.from(bytes);
 
     // Buat nama file unik
-    const extractPath = path.join(process.cwd(), 'public', 'uploads');
-
     // Pastikan direktori uploads ada
     const imageDir = path.join(process.cwd(), 'public', 'uploads', 'image');
     const audioDir = path.join(process.cwd(), 'public', 'uploads', 'audio');
     
     await Promise.all([
       fs.promises.mkdir(imageDir, { recursive: true }),
-      fs.promises.mkdir(audioDir, { recursive: true })
+      fs.promises.mkdir(audioDir, { recursive: true }) 
     ]);
 
+    //call ve
+    //
     // Ekstraksi file
     const zip = new AdmZip(buffer);
     const zipEntries = zip.getEntries();
+    const folderTempImage = path.join(process.cwd(), 'public', 'uploads', 'temp', 'image');
+    fs.mkdirSync(folderTempImage, { recursive: true });
 
     // Proses setiap file dalam ZIP
-    zipEntries.forEach((zipEntry) => {
+    zipEntries.forEach(async (zipEntry) => {
       // Hindari folder
       if (zipEntry.isDirectory) return;
 
@@ -50,21 +54,50 @@ export async function POST(request: NextRequest) {
       // Tentukan folder tujuan berdasarkan ekstensi
       let destinationFolder = '';
       if (['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp'].includes(fileExtension)) {
-        destinationFolder = path.join(extractPath, 'image');
-      } else if (['.mid', '.wav'].includes(fileExtension)) {
-        destinationFolder = path.join(extractPath, 'audio');
+        destinationFolder = imageDir;
+        fs.writeFileSync(path.join(folderTempImage, path.basename(entryName)), zipEntry.getData());
+      } else if (['.mid', '.wav', '.mp3'].includes(fileExtension)) {
+        destinationFolder = audioDir;
       } else {
         // Abaikan file yang tidak termasuk dalam kategori
         return;
       }
-
       // Buat path file tujuan
       const destinationPath = path.join(destinationFolder, path.basename(entryName));
       
       // Ekstrak file
       fs.writeFileSync(destinationPath, zipEntry.getData());
     });
-
+    
+    const execPromise = util.promisify(exec);
+    
+    async function inputNewImage(folderPath: string) {
+      try {
+        const scriptPath = `"${path.join(process.cwd(), 'src', 'app', 'api', 'image-retrieval', 'processNewImage.py')}"`;
+        const { stdout, stderr } = await execPromise(`python "${scriptPath}" --folder="${folderPath}"`);
+        if (stderr) {
+          console.error('Error:', stderr);
+        }
+        console.log('Output:', stdout);
+      } catch (error) {
+        console.error('Execution error:', error);
+      }
+    }
+    await inputNewImage(folderTempImage);
+    async function inputNewAudio() {
+      try {
+        const scriptPath = `"${path.join(process.cwd(), 'src', 'app', 'api', 'audio-retrieval', 'audioDatabase.py')}"`;
+        const { stdout, stderr } = await execPromise(`python "${scriptPath}"`);
+        if (stderr) {
+          console.error('Error:', stderr);
+        }
+        console.log('Output:', stdout);
+      } catch (error) {
+        console.error('Execution error:', error);
+      }
+    }
+    await inputNewAudio();
+    fs.rmdirSync(folderTempImage, { recursive: true });
     return NextResponse.json({ 
       message: 'Upload dan ekstraksi berhasil'
     });

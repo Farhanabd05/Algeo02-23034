@@ -1,76 +1,207 @@
 "use client";
-import React, { useState } from 'react';
-import { useDropzone } from 'react-dropzone';
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { useToast } from '@/hooks/use-toast';
 
-type FilePreview = {
-  name: string;
-  size: number;
-  type: string;
-  preview: string;
-};
+export default function ZipUploadPage() {
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [fileSize, setFileSize] = useState<number | null>(null);
+  const [selectedJsonFile, setSelectedJsonFile] = useState<File | null>(null);
+  const { toast } = useToast();
 
-const DropZone: React.FC = () => {
-  const [files, setFiles] = useState<FilePreview[]>([]);
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      // Validasi tipe file (hanya ZIP)
+      if (!file.name.toLowerCase().endsWith('.zip')) {
+        toast({
+          title: "Error",
+          description: "Silakan pilih file ZIP",
+          variant: "destructive"
+        });
+        return;
+      }
 
-  const onDrop = (acceptedFiles: File[]) => {
-    // Map the accepted files to include additional properties for preview
-    const filePreviews = acceptedFiles.map((file) => ({
-      name: file.name,
-      size: file.size,
-      type: file.type,
-      preview: URL.createObjectURL(file),
-    }));
-    setFiles(filePreviews);
+      // Validasi ukuran file (maks 50MB)
+      if (file.size > 50 * 1024 * 1024) {
+        toast({
+          title: "Error",
+          description: "Ukuran file terlalu besar (maks 50MB)",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      setSelectedFile(file);
+      setFileSize(file.size);
+    }
   };
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop,
-    accept: { 'image/*': [] }, // Restrict file types to images
-    multiple: true, // Allow multiple files
-  });
+  const handleJsonFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      // Validasi tipe file (hanya JSON)
+      if (!file.name.toLowerCase().endsWith('.json')) {
+        toast({
+          title: "Error",
+          description: "Silakan pilih file JSON",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      setSelectedJsonFile(file);
+    }
+  };
+
+  const handleUpload = async () => {
+    if (!selectedFile) {
+      toast({
+        title: "Error",
+        description: "Silakan pilih file terlebih dahulu",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    try {
+      // Membuat FormData
+      const formData = new FormData();
+      formData.append('file', selectedFile);
+
+      // Kirim ke API route untuk upload
+      const response = await fetch('/api/upload/zip', {
+        method: 'POST',
+        body: formData
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        toast({
+          title: "Berhasil",
+          description: "File ZIP berhasil diupload dan diekstrak",
+          variant: "default"
+        });
+        
+        // Reset state setelah upload
+        setSelectedFile(null);
+        setFileSize(null);
+      } else {
+        toast({
+          title: "Error",
+          description: result.error || "Gagal mengupload file",
+          variant: "destructive"
+        });
+      }
+    } catch (error) {
+      console.error('Upload error:', error);
+      toast({
+        title: "Error",
+        description: "Gagal mengupload file",
+        variant: "destructive"
+      })
+    }
+  };
+
+  const handleJsonUpload = async () => {
+    if (!selectedJsonFile) {
+      toast({
+        title: "Error",
+        description: "Silakan pilih file JSON terlebih dahulu",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    try {
+      // Membuat FormData
+      const formData = new FormData();
+      formData.append('file', selectedJsonFile);
+
+      // Kirim ke API route untuk upload JSON
+      const response = await fetch('/api/upload/json', {
+        method: 'POST',
+        body: formData
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        toast({
+          title: "Berhasil",
+          description: "File JSON berhasil diupload",
+          variant: "default"
+        });
+
+        // Reset state setelah upload
+        setSelectedJsonFile(null);
+      } else {
+        toast({
+          title: "Error",
+          description: result.error || "Gagal mengupload file JSON",
+          variant: "destructive"
+        });
+      }
+    } catch (error) {
+      console.error('Upload error:', error);
+      toast({
+        title: "Error",
+        description: "Gagal mengupload file JSON",
+        variant: "destructive"
+      });
+    }
+  };
 
   return (
-    <div className="flex flex-col items-center justify-center">
-      <div
-        {...getRootProps()}
-        className={`w-full max-w-lg p-6 text-center border-2 border-dashed rounded-lg cursor-pointer ${
-          isDragActive ? 'border-blue-500 bg-blue-50' : 'border-gray-400'
-        }`}
-      >
-        <input {...getInputProps()} />
-        {isDragActive ? (
-          <p className="text-blue-500 font-medium">Drop the files here...</p>
-        ) : (
-          <p className="text-gray-500 font-medium">
-            Drag & drop some files here, or click to select files
-          </p>
-        )}
-      </div>
+    <div className="container mx-auto p-4">
+      <h1 className="text-2xl mb-4">Upload File ZIP</h1>
+      
+      <div className="space-y-4">
+        <Input 
+          type="file" 
+          accept=".zip"
+          onChange={handleFileChange}
+          className="w-full"
+        />
 
-      {files.length > 0 && (
-        <div className="mt-4 w-full max-w-lg">
-          <h3 className="text-lg font-semibold mb-2">Uploaded Files:</h3>
-          <ul>
-            {files.map((file, index) => (
-              <li key={index} className="flex items-center gap-4 mb-3">
-                <img
-                  src={file.preview}
-                  alt={file.name}
-                  className="w-16 h-16 object-cover rounded-lg border"
-                />
-                <div>
-                  <p className="text-sm font-medium">{file.name}</p>
-                  <p className="text-xs text-gray-500">
-                    {(file.size / 1024).toFixed(2)} KB
-                  </p>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+        {selectedFile && (
+          <div className="mt-2">
+            <p>Nama File: {selectedFile.name}</p>
+            <p>Ukuran File: {(fileSize! / 1024 / 1024).toFixed(2)} MB</p>
+          </div>
+        )}
+
+        <Button 
+          onClick={handleUpload}
+          disabled={!selectedFile}
+          className="w-full"
+        >
+          Upload dan Ekstrak ZIP
+        </Button>
+        <h1 className="text-2xl mb-4">Upload File JSON</h1>
+        <Input 
+          type="file" 
+          accept=".json"
+          onChange={handleJsonFileChange}
+          className="w-full"
+        />
+
+        {selectedJsonFile && (
+          <div className="mt-2">
+            <p>Nama File: {selectedJsonFile.name}</p>
+          </div>
+        )}
+
+        <Button 
+          onClick={handleJsonUpload}
+          disabled={!selectedJsonFile}
+          className="w-full"
+        >
+          Upload JSON
+        </Button>
+      </div>
     </div>
   );
-};
-
-export default DropZone;
+}

@@ -1,18 +1,30 @@
 [
     {
         "audio": "audio_1.mid",
-        "image": "pic_1.png"
+        "image": "pic_2.png"
     },
     {
         "audio": "audio_2.mid",
-        "image": "pic_2.png"
+        "image": "pic_1.png"
     },
     {
         "audio": "audio_3.mid",
         "image": "pic_3.png"
     },
     {
-        "audio": "audio_4.mid",
+        "audio": "audio_4.wav",
         "image": "pic_4.png"
+    },
+    {
+        "audio": "audio_5.mid",
+        "image": "pic_5.png"
+    },
+    {
+        "audio": "audio_6.mid",
+        "image": "pic_6.png"
+    },
+    {
+        "audio": "audio_7.mid",
+        "image": "pic_7.jpg"
     }
 ]
